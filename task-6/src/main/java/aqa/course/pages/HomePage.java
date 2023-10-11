@@ -1,19 +1,19 @@
 package aqa.course.pages;
 
-import aqa.course.elements.PrimaryHeader;
-import org.openqa.selenium.By;
+import java.util.Arrays;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.Arrays;
-import java.util.List;
+import aqa.course.elements.PrimaryHeader;
 
 public class HomePage {
 
-    private WebDriver driver;
-    private PrimaryHeader primaryHeader;
+    private final WebDriver driver;
+    private final PrimaryHeader primaryHeader;
 
     @FindBy(xpath = "//div[@class='inventory_list']/div[@class='inventory_item']")
     private List<WebElement> inventoryListProducts;

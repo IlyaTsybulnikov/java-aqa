@@ -1,14 +1,15 @@
 package aqa.course.elements;
 
-import aqa.course.pages.CartPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import aqa.course.pages.CartPage;
+
 public class PrimaryHeader {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     @FindBy(id = "shopping_cart_container")
     private WebElement goToCartButton;

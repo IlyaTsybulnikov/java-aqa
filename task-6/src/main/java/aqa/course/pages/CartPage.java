@@ -1,17 +1,16 @@
 package aqa.course.pages;
 
-import org.openqa.selenium.By;
+import java.util.Arrays;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class CartPage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     @FindBy(xpath = "//div[@class='cart_list']/div[@class='cart_item'][1]//div[@class='inventory_item_name']")
     private WebElement firstCartItemName;
