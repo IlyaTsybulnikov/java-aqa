@@ -11,8 +11,8 @@ public class PrimaryHeader {
 
     private final WebDriver driver;
 
-    @FindBy(id = "shopping_cart_container")
-    private WebElement goToCartButton;
+    @FindBy(xpath = "//a[@class='shopping_cart_link']")
+    private WebElement openCartButton;
 
     public PrimaryHeader(WebDriver driver){
         this.driver = driver;
@@ -20,7 +20,7 @@ public class PrimaryHeader {
     }
 
     public CartPage clickGoToCart() {
-        goToCartButton.click();
+        openCartButton.click();
 
         return new CartPage(driver);
     }

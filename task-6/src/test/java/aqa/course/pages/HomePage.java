@@ -12,32 +12,30 @@ import aqa.course.elements.PrimaryHeader;
 
 public class HomePage {
 
-    private final WebDriver driver;
     private final PrimaryHeader primaryHeader;
 
-    @FindBy(xpath = "//div[@class='inventory_list']/div[@class='inventory_item']")
+    @FindBy(xpath = "//div[@class='inventory_item']")
     private List<WebElement> inventoryListProducts;
-    @FindBy(xpath = "//div[@class='inventory_list']/div[@class='inventory_item'][last()]")
+    @FindBy(xpath = "//div[@class='inventory_item'][last()]")
     private WebElement lastInventoryListProduct;
     @FindBy(xpath = "//select[@data-test='product_sort_container']")
-    private WebElement sortSelect;
+    private WebElement sortProductsButton;
 
-    @FindBy(xpath = "//div[@class='inventory_list']/div[1]//div[@class='pricebar']/button")
+    @FindBy(xpath = "//div[@class='inventory_item'][1]//button")
     private WebElement firstProductButton;
-    @FindBy(xpath = "//div[@class='inventory_list']/div[4]//div[@class='pricebar']/button")
+    @FindBy(xpath = "//div[@class='inventory_item'][4]//button")
     private WebElement secondProductButton;
-    @FindBy(xpath = "//div[@class='inventory_list']/div[5]//div[@class='pricebar']/button")
+    @FindBy(xpath = "//div[@class='inventory_item'][5]//button")
     private WebElement thirdProductButton;
 
-    @FindBy(xpath = "//div[@class='inventory_list']/div[1]//div[@class='inventory_item_name']")
-    private WebElement firstProductName;
-    @FindBy(xpath = "//div[@class='inventory_list']/div[4]//div[@class='inventory_item_name']")
-    private WebElement secondProductName;
-    @FindBy(xpath = "//div[@class='inventory_list']/div[5]//div[@class='inventory_item_name']")
-    private WebElement thirdProductName;
+    @FindBy(xpath = "//div[@class='inventory_item'][1]/div[2]//a")
+    private WebElement firstProductTitle;
+    @FindBy(xpath = "//div[@class='inventory_item'][4]/div[2]//a")
+    private WebElement secondProductTitle;
+    @FindBy(xpath = "//div[@class='inventory_item'][5]/div[2]//a")
+    private WebElement thirdProductTitle;
 
     public HomePage(WebDriver driver) {
-        this.driver = driver;
         this.primaryHeader = new PrimaryHeader(driver);
 
         PageFactory.initElements(driver, this);
@@ -63,14 +61,14 @@ public class HomePage {
 
     public List<String> getProductNames() {
         return Arrays.asList(
-                firstProductName.getText(),
-                secondProductName.getText(),
-                thirdProductName.getText()
+                firstProductTitle.getAttribute("id"),
+                secondProductTitle.getAttribute("id"),
+                thirdProductTitle.getAttribute("id")
         );
     }
 
     public WebElement getSortSelect() {
-        return sortSelect;
+        return sortProductsButton;
     }
 
     public CartPage clickCartButton() {
