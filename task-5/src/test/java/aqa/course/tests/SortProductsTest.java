@@ -12,14 +12,14 @@ import aqa.course.hooks.Configuration;
 
 public class SortProductsTest extends Configuration {
 
-    private final By sortProductsSelect = By.xpath("//select[@data-test='product_sort_container']");
+    private final By sortProductsButton = By.xpath("//select[@data-test='product_sort_container']");
     private final By firstInventoryItem = By.xpath("//div[@class='inventory_item']");
     private final By lastInventoryItem = By.xpath("//div[@class='inventory_item'][last()]");
 
     @Test
     @DisplayName("Sort products and make sure they moved ")
     void productsSortingTest() {
-        Select sortSelect = new Select(driver.findElement(sortProductsSelect));
+        Select sortSelect = new Select(driver.findElement(sortProductsButton));
 
         sortSelect.selectByValue("az");
         WebElement firstElemBeforeSort = driver.findElement(firstInventoryItem);
@@ -29,12 +29,12 @@ public class SortProductsTest extends Configuration {
 
         assertEquals(firstElemBeforeSort, lastElemAfterSort);
 
-        sortSelect = new Select(driver.findElement(sortProductsSelect));
+        sortSelect = new Select(driver.findElement(sortProductsButton));
         sortSelect.selectByValue("hilo");
 
         firstElemBeforeSort = driver.findElement(firstInventoryItem);
 
-        sortSelect = new Select(driver.findElement(sortProductsSelect));
+        sortSelect = new Select(driver.findElement(sortProductsButton));
         sortSelect.selectByValue("lohi");
 
         lastElemAfterSort = driver.findElement(lastInventoryItem);

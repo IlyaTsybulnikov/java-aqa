@@ -13,7 +13,7 @@ import aqa.course.hooks.Configuration;
 
 public class NumberOfProductsTest extends Configuration {
 
-    private static final By inventoryListItem = By.xpath("//div[@class='inventory_list']/div");
+    private final By inventoryListItem = By.xpath("//div[@class='inventory_list']/div");
 
     @Test
     @DisplayName("Check the number of products")

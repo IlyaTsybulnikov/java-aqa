@@ -1,37 +1,29 @@
 package aqa.course.tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
 import aqa.course.hooks.Configuration;
+import org.openqa.selenium.WebElement;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WorkWithCartTest extends Configuration {
 
-    private final By firstProductButton = By.xpath("//div[@class='inventory_list']/div[1]//button");
-    private final By secondProductButton = By.xpath("//div[@class='inventory_list']/div[4]//button");
-    private final By thirdProductButton = By.xpath("//div[@class='inventory_list']/div[5]//button");
-    private final By firstProductTitle = By.xpath("//div[@class='inventory_list']/div[1]" +
-            "//div[@class='inventory_item_name']");
-    private final By secondProductTitle = By.xpath("//div[@class='inventory_list']/div[4]" +
-            "//div[@class='inventory_item_name']");
-    private final By thirdProductTitle = By.xpath("//div[@class='inventory_list']/div[5]" +
-            "//div[@class='inventory_item_name']");
-    private final By goToCartButton = By.xpath("//a[@class='shopping_cart_link']");
-    private final By firstCartItemTitle = By.xpath("//div[@class='cart_item'][1]" +
-            "//div[@class='inventory_item_name']");
-    private final By secondCartItemTitle = By.xpath("//div[@class='cart_item'][2]" +
-            "//div[@class='inventory_item_name']");
-    private final By thirdCartItemTitle = By.xpath("//div[@class='cart_item'][3]" +
-            "//div[@class='inventory_item_name']");
+    private final By firstProductButton = By.xpath("//div[@class='inventory_item'][1]//button");
+    private final By secondProductButton = By.xpath("//div[@class='inventory_item'][4]//button");
+    private final By thirdProductButton = By.xpath("//div[@class='inventory_item'][5]//button");
+    private final By firstProductTitle = By.xpath("//div[@class='inventory_item'][1]/div[2]//a");
+    private final By secondProductTitle = By.xpath("//div[@class='inventory_item'][4]/div[2]//a");
+    private final By thirdProductTitle = By.xpath("//div[@class='inventory_item'][5]/div[2]//a");
+    private final By openCartButton = By.xpath("//a[@class='shopping_cart_link']");
+    private final By cartItemTitles = By.xpath("//div[@class='cart_item']//a");
     private final By thirdCartItemRemoveButton = By.xpath("//div[@class='cart_item'][3]//button");
-    private final By lastCartItemTitle = By.xpath("//div[@class='cart_item'][last()]" +
-            "//div[@class='inventory_item_name']");
 
     @Test
     @DisplayName("Checking if adding to cart and removing from cart works well")
@@ -40,25 +32,36 @@ public class WorkWithCartTest extends Configuration {
         driver.findElement(secondProductButton).click();
         driver.findElement(thirdProductButton).click();
 
-        String firstProductName = driver.findElement(firstProductTitle).getText();
-        String secondProductName = driver.findElement(secondProductTitle).getText();
-        String thirdProductName = driver.findElement(thirdProductTitle).getText();
+        WebElement firstProductName = driver.findElement(firstProductTitle);
+        WebElement secondProductName = driver.findElement(secondProductTitle);
+        WebElement thirdProductName = driver.findElement(thirdProductTitle);
 
-        driver.findElement(goToCartButton).click();
+        List<String> productNames = Arrays.asList(
+                firstProductName.getAttribute("id"),
+                secondProductName.getAttribute("id"),
+                thirdProductName.getAttribute("id")
+        );
 
-        String firstCartItemName = driver.findElement(firstCartItemTitle).getText();
-        String secondCartItemName = driver.findElement(secondCartItemTitle).getText();
-        String thirdCartItemName = driver.findElement(thirdCartItemTitle).getText();
+        driver.findElement(openCartButton).click();
+
+        List<String> allCartItemNames = driver.findElements(cartItemTitles).stream()
+                .map(cartItemTitle -> cartItemTitle.getAttribute("id"))
+                .collect(Collectors.toList());
+
+        assertEquals(
+                productNames,
+                allCartItemNames
+        );
 
         driver.findElement(thirdCartItemRemoveButton).click();
 
-        String lastCartItemName = driver.findElement(lastCartItemTitle).getText();
+        allCartItemNames = driver.findElements(cartItemTitles).stream()
+                .map(cartItemTitle -> cartItemTitle.getAttribute("id"))
+                .collect(Collectors.toList());
 
-        assertEquals(
-                Arrays.asList(firstProductName, secondProductName, thirdProductName),
-                Arrays.asList(firstCartItemName, secondCartItemName, thirdCartItemName)
-        );
-        assertNotEquals(thirdProductName, lastCartItemName);
-        assertEquals(secondCartItemName, lastCartItemName);
+        assertEquals(2, allCartItemNames.size());
+        assertTrue(allCartItemNames.contains(productNames.get(0)));
+        assertTrue(allCartItemNames.contains(productNames.get(1)));
+        assertFalse(allCartItemNames.contains(productNames.get(2)));
     }
 }
