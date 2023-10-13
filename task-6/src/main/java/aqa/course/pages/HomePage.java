@@ -61,9 +61,9 @@ public class HomePage {
 
     public List<String> getProductNames() {
         return Arrays.asList(
-                firstProductTitle.getAttribute("id"),
-                secondProductTitle.getAttribute("id"),
-                thirdProductTitle.getAttribute("id")
+                firstProductTitle.getText(),
+                secondProductTitle.getText(),
+                thirdProductTitle.getText()
         );
     }
 

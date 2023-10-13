@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
-    private final WebDriver driver;
+    private final HomePage homePage;
 
     @FindBy(xpath = "//input[@id='user-name']")
     private WebElement usernameField;
@@ -17,28 +17,15 @@ public class LoginPage {
     private WebElement loginButton;
 
     public LoginPage(WebDriver driver){
-        this.driver = driver;
+        homePage = new HomePage(driver);
         PageFactory.initElements(driver, this);
     }
 
-    public void setUsername(String username) {
+    public HomePage logIn(String username, String password) {
         usernameField.sendKeys(username);
-    }
-
-    public void setPassword(String password) {
         passwordField.sendKeys(password);
-    }
-
-    public HomePage clickSignInButton() {
         loginButton.click();
 
-        return new HomePage(driver);
-    }
-
-    public HomePage logIn(String username, String password) {
-        setUsername(username);
-        setPassword(password);
-
-        return clickSignInButton();
+        return homePage;
     }
 }

@@ -11,15 +11,12 @@ import org.junit.jupiter.api.Test;
 
 import aqa.course.hooks.Configuration;
 import aqa.course.pages.CartPage;
-import aqa.course.pages.HomePage;
 
 class WorkWithCartTest extends Configuration {
 
     @Test
     @DisplayName("Checking if adding to cart and removing from cart works well")
     void addAndRemoveFromCartTest() {
-        HomePage homePage = new HomePage(driver);
-
         homePage.addProductsToCart();
         List<String> productNames = homePage.getProductNames();
 

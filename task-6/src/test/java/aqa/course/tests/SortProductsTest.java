@@ -8,15 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import aqa.course.hooks.Configuration;
-import aqa.course.pages.HomePage;
 
 class SortProductsTest extends Configuration {
 
     @Test
     @DisplayName("Sort products and make sure they moved ")
     void productsSortingTest() {
-        HomePage homePage = new HomePage(driver);
-
         Select sortSelect = new Select(homePage.getSortSelect());
 
         sortSelect.selectByValue("az");

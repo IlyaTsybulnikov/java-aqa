@@ -21,7 +21,7 @@ public class CartPage {
 
     public List<String> getCartItemNames() {
         return cartItemTitles.stream()
-                .map(cartItemTitle -> cartItemTitle.getAttribute("id"))
+                .map(WebElement::getText)
                 .collect(Collectors.toList());
     }
 

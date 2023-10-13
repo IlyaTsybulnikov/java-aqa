@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import aqa.course.pages.HomePage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.WebDriver;
@@ -17,7 +18,8 @@ import aqa.course.pages.LoginPage;
 
 public class Configuration {
 
-    protected static WebDriver driver;
+    protected static HomePage homePage;
+    private static WebDriver driver;
 
     @BeforeAll
     public static void beforeAll() {
@@ -28,7 +30,7 @@ public class Configuration {
         List<String> credentials = getCredentials();
 
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.logIn(credentials.get(0), credentials.get(1));
+        homePage = loginPage.logIn(credentials.get(0), credentials.get(1));
     }
 
     @AfterAll
