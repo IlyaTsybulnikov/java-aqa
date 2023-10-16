@@ -1,12 +1,14 @@
 package aqa.course.tests;
 
 import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.ElementsCollection;
 
 import aqa.course.pages.HomePage;
 import aqa.course.pages.LoginPage;
@@ -25,6 +27,7 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage();
         HomePage homePage = loginPage.logIn(username, password);
 
-        assertFalse(homePage.getAllProducts().isEmpty());
+        homePage.getAllProducts()
+                .shouldHave(CollectionCondition.sizeNotEqual(0));
     }
 }

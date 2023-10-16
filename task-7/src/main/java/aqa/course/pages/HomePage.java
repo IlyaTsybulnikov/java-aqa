@@ -26,6 +26,14 @@ public class HomePage {
         return inventoryListProducts;
     }
 
+    public SelenideElement getFirstProducts() {
+        return getAllProducts().first();
+    }
+
+    public SelenideElement getLastProducts() {
+        return getAllProducts().last();
+    }
+
     public SelenideElement getProductName(SelenideElement product) {
         return product.$x("./div[2]//a");
     }

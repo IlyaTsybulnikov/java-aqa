@@ -1,12 +1,11 @@
 package aqa.course.tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.support.ui.Select;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 
 import aqa.course.hooks.Configuration;
 
@@ -15,29 +14,21 @@ class SortProductsTest extends Configuration {
     @Test
     @DisplayName("Sort products and make sure they moved ")
     void productsSortingTest() {
-        ElementsCollection allProducts;
-        Select sortSelect = new Select(homePage.getSortSelect());
+        homePage.getSortSelect().selectOptionByValue("az");
+        String firstElemBeforeSort = homePage.getProductName(homePage.getFirstProducts()).getText();
 
-        sortSelect.selectByValue("az");
-        allProducts = homePage.getAllProducts();
-        String firstElemBeforeSort = homePage.getProductName(allProducts.first()).getText();
+        homePage.getSortSelect().selectOptionByValue("za");
+        SelenideElement lastElemAfterSort = homePage.getProductName(homePage.getLastProducts());
 
-        sortSelect.selectByValue("za");
-        allProducts = homePage.getAllProducts();
-        String lastElemAfterSort = homePage.getProductName(allProducts.last()).getText();
+        lastElemAfterSort.shouldHave(Condition.text(firstElemBeforeSort));
 
-        assertEquals(firstElemBeforeSort, lastElemAfterSort);
+        homePage.getSortSelect().selectOptionByValue("hilo");
+        firstElemBeforeSort = homePage.getProductName(homePage.getFirstProducts()).getText();
 
-        sortSelect = new Select(homePage.getSortSelect());
-        sortSelect.selectByValue("hilo");
-        allProducts = homePage.getAllProducts();
-        firstElemBeforeSort = homePage.getProductName(allProducts.first()).getText();
+        homePage.getSortSelect().selectOptionByValue("lohi");
+        lastElemAfterSort = homePage.getProductName(homePage.getLastProducts());
 
-        sortSelect = new Select(homePage.getSortSelect());
-        sortSelect.selectByValue("lohi");
-        allProducts = homePage.getAllProducts();
-        lastElemAfterSort = homePage.getProductName(allProducts.last()).getText();
 
-        assertEquals(firstElemBeforeSort, lastElemAfterSort);
+        lastElemAfterSort.shouldHave(Condition.text(firstElemBeforeSort));
     }
 }
