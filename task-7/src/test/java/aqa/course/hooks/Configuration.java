@@ -24,7 +24,7 @@ public class Configuration {
 
         List<String> credentials = getCredentials();
 
-        new LoginPage().logIn(credentials.get(0), credentials.get(1));
+        homePage = new LoginPage().logIn(credentials.get(0), credentials.get(1));
     }
 
     private static List<String> getCredentials() {
