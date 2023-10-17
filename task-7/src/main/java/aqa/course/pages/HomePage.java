@@ -3,8 +3,6 @@ package aqa.course.pages;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
-import org.openqa.selenium.By;
-
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
@@ -16,22 +14,18 @@ public class HomePage {
     private final SelenideElement sortProductsButton = $x("//select[@data-test='product_sort_container']");
 
 
-    private final PrimaryHeader primaryHeader;
-
-    public HomePage() {
-        this.primaryHeader = new PrimaryHeader();
-    }
+    private final PrimaryHeader primaryHeader = new PrimaryHeader();
 
     public ElementsCollection getAllProducts() {
         return inventoryListProducts;
     }
 
-    public SelenideElement getFirstProducts() {
-        return getAllProducts().first();
+    public SelenideElement getFirstProduct() {
+        return inventoryListProducts.first();
     }
 
-    public SelenideElement getLastProducts() {
-        return getAllProducts().last();
+    public SelenideElement getLastProduct() {
+        return inventoryListProducts.last();
     }
 
     public SelenideElement getProductName(SelenideElement product) {
@@ -43,7 +37,7 @@ public class HomePage {
     }
 
     public void clickAddToCartButton(SelenideElement product) {
-        product.find(By.xpath(".//button")).click();
+        product.$x(".//button").click();
     }
 
     public CartPage clickCartButton() {

@@ -24,8 +24,7 @@ public class Configuration {
 
         List<String> credentials = getCredentials();
 
-        LoginPage loginPage = new LoginPage();
-        homePage = loginPage.logIn(credentials.get(0), credentials.get(1));
+        new LoginPage().logIn(credentials.get(0), credentials.get(1));
     }
 
     private static List<String> getCredentials() {
@@ -34,8 +33,7 @@ public class Configuration {
         try (BufferedReader br =
                      new BufferedReader(new FileReader("src/test/resources/loginCredentials.csv"))
         ) {
-            String line = br.readLine();
-            loginCredentials = Arrays.asList(line.split(","));
+            loginCredentials = Arrays.asList(br.readLine().split(","));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

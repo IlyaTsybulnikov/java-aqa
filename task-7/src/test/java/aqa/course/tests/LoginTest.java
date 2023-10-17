@@ -8,9 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
 import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.ElementsCollection;
 
-import aqa.course.pages.HomePage;
 import aqa.course.pages.LoginPage;
 
 public class LoginTest {
@@ -24,10 +22,7 @@ public class LoginTest {
     @CsvFileSource(resources = "/loginCredentials.csv")
     @DisplayName("Checking login for different users")
     void SuccessfulLoginTest(String username, String password) {
-        LoginPage loginPage = new LoginPage();
-        HomePage homePage = loginPage.logIn(username, password);
-
-        homePage.getAllProducts()
+        new LoginPage().logIn(username, password).getAllProducts()
                 .shouldHave(CollectionCondition.sizeNotEqual(0));
     }
 }

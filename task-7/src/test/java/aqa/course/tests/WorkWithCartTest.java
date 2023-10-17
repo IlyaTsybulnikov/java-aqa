@@ -1,39 +1,38 @@
 package aqa.course.tests;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import aqa.course.hooks.Configuration;
+import aqa.course.pages.CartPage;
+import com.codeborne.selenide.CollectionCondition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.ElementsCollection;
-
-import aqa.course.hooks.Configuration;
-import aqa.course.pages.CartPage;
+import java.util.List;
+import java.util.stream.Collectors;
 
 class WorkWithCartTest extends Configuration {
 
     @Test
     @DisplayName("Checking if adding to cart and removing from cart works well")
     void addAndRemoveFromCartTest() {
-        ElementsCollection productsToAddToCart = homePage.getAllProducts().first(3);
-
-        List<String> addedProductNames = productsToAddToCart.asDynamicIterable().stream()
-                .map(product -> homePage.getProductName(product).getText()).collect(Collectors.toList());
-
-        productsToAddToCart.asDynamicIterable().forEach(product -> homePage.clickAddToCartButton(product));
+        List<String> addedProductNames = homePage.getAllProducts().first(3)
+                .asDynamicIterable().stream()
+                .peek(product -> homePage.clickAddToCartButton(product))
+                .map(product -> homePage.getProductName(product).getText())
+                .collect(Collectors.toList());
 
         CartPage cartPage = homePage.clickCartButton();
-        ElementsCollection cartItems = cartPage.getCartItemNames();
 
-        cartItems.shouldHave(CollectionCondition.texts(addedProductNames));
+        cartPage.getCartItemNames().shouldHave(
+                CollectionCondition.size(3),
+                CollectionCondition.texts(addedProductNames)
+        );
 
         cartPage.clickRemoveThirdCartItem();
-        cartItems = cartPage.getCartItemNames();
 
-        cartItems.shouldHave(CollectionCondition.size(2));
-        cartItems.shouldHave(CollectionCondition.itemWithText(addedProductNames.get(0)));
-        cartItems.shouldHave(CollectionCondition.itemWithText(addedProductNames.get(1)));
+        cartPage.getCartItemNames().shouldHave(
+                CollectionCondition.size(2),
+                CollectionCondition.itemWithText(addedProductNames.get(0)),
+                CollectionCondition.itemWithText(addedProductNames.get(1))
+        );
     }
 }
