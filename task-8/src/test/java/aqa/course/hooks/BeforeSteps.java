@@ -14,7 +14,7 @@ import io.cucumber.java.en.Given;
 
 public class BeforeSteps {
 
-    @Given("^I am logged in to site$")
+    @Given("I am logged in to site")
     public void openLoginPage() {
         open("https://www.saucedemo.com/");
 

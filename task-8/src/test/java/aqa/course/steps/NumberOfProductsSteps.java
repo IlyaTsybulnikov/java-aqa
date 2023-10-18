@@ -12,12 +12,12 @@ public class NumberOfProductsSteps {
     private final HomePage homePage = new HomePage();
     private ElementsCollection allProducts;
 
-    @When("^I get all products on the home page$")
+    @When("I get all products on the home page")
     public void getAllProducts() {
         this.allProducts = homePage.getAllProducts();
     }
 
-    @Then("^check if number of products equals six$")
+    @Then("check if number of products equals six")
     public void checkProductNumber() {
         this.allProducts.shouldHave(CollectionCondition.size(6));
     }
