@@ -16,27 +16,27 @@ public class LoginSteps {
     private String password;
     private HomePage homePage;
 
-    @Given("that login page is opened")
+    @Given("^that login page is opened$")
     public void openLoginPage() {
         open("https://www.saucedemo.com/");
     }
 
-    @When("I enter username as (.*)")
+    @When("^I enter username as (.*)$")
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @When("I enter password as (.*)")
+    @When("^I enter password as (.*)$")
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @When("I click the \"Login\" button")
+    @When("^I click the \"Login\" button$")
     public void login() {
         this.homePage = new LoginPage().logIn(this.username, this.password);
     }
 
-    @Then("check if home page is open")
+    @Then("^check if home page is open$")
     public void checkHomePageIsOpen() {
         this.homePage.getAllProducts()
                 .shouldHave(CollectionCondition.sizeNotEqual(0));

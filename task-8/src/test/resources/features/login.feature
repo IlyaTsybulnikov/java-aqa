@@ -1,4 +1,4 @@
-Feature: Login
+Feature: LoginSteps
     As a user
     I want to log into a site
 

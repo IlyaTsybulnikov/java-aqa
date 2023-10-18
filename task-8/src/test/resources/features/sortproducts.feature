@@ -1,4 +1,4 @@
-Feature: Sort products
+Feature: SortProductsSteps
 
   Background:
     Given I am logged in to site

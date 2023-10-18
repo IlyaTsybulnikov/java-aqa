@@ -1,4 +1,4 @@
-Feature: Work with cart
+Feature: WorkWithCartSteps
 
   Background:
     Given I am logged in to site

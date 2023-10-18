@@ -16,7 +16,7 @@ public class WorkWithCartSteps {
     private List<String> addedProductNames;
     private CartPage cartPage;
 
-    @When("I add three products to cart")
+    @When("^I add three products to cart$")
     public void addToCart() {
         this.addedProductNames = homePage.getAllProducts().first(3)
                 .asDynamicIterable().stream()
@@ -25,12 +25,12 @@ public class WorkWithCartSteps {
                 .collect(Collectors.toList());
     }
 
-    @When("I click cart icon")
+    @When("^I click cart icon$")
     public void goToCart() {
          this.cartPage = homePage.clickCartButton();
     }
 
-    @Then("check if cart contains selected products")
+    @Then("^check if cart contains selected products$")
     public void checkCartProducts() {
         cartPage.getCartItemNames().shouldHave(
                 CollectionCondition.size(3),
@@ -38,12 +38,12 @@ public class WorkWithCartSteps {
         );
     }
 
-    @When("I click \"remove\" button on the third cart item")
+    @When("^I click \"remove\" button on the third cart item$")
     public void removeThirdCartItem() {
         cartPage.clickRemoveThirdCartItem();
     }
 
-    @Then("check if cart no longer contains third item")
+    @Then("^check if cart no longer contains third item$")
     public void checkThirdItemRemoved() {
         cartPage.getCartItemNames().shouldHave(
                 CollectionCondition.size(2),

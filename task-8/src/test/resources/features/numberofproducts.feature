@@ -1,4 +1,4 @@
-Feature: Logging to site and checking products
+Feature: NumberOfProductsSteps
 
   Background:
     Given I am logged in to site

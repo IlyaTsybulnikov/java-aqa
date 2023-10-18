@@ -11,17 +11,17 @@ public class SortProductsSteps {
     private final HomePage homePage = new HomePage();
     private String firstElemBeforeSort;
 
-    @When("I select \"(.*)\" sort option")
+    @When("^I select \"(.*)\" sort option$")
     public void selectSortOption(String sortOption) {
         homePage.getSortSelect().selectOptionByValue(sortOption);
     }
 
-    @When("I take first product")
+    @When("^I take first product$")
     public void getFirstProduct() {
         firstElemBeforeSort = homePage.getProductName(homePage.getFirstProduct()).getText();
     }
 
-    @Then("check if first product became last")
+    @Then("^check if first product became last$")
     public void compareFirstAndLastProducts() {
         homePage.getProductName(homePage.getLastProduct())
                 .shouldHave(Condition.text(firstElemBeforeSort));
