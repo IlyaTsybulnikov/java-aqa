@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven 3.6.3'
+        jdk 'jdk8'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://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@github.com/IlyaTsybulnikov/java-aqa.git'
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+    }
+}
