@@ -3,6 +3,7 @@ package aqa.course.steps;
 import com.codeborne.selenide.Condition;
 
 import aqa.course.pages.HomePage;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -16,7 +17,7 @@ public class SortProductsSteps {
         homePage.getSortSelect().selectOptionByValue(sortOption);
     }
 
-    @When("^I take first product$")
+    @And("^I take first product$")
     public void getFirstProduct() {
         firstElemBeforeSort = homePage.getProductName(homePage.getFirstProduct()).getText();
     }

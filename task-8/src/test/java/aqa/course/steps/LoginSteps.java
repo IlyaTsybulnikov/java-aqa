@@ -6,6 +6,7 @@ import com.codeborne.selenide.CollectionCondition;
 
 import aqa.course.pages.HomePage;
 import aqa.course.pages.LoginPage;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -26,12 +27,12 @@ public class LoginSteps {
         this.username = username;
     }
 
-    @When("^I enter password as (.*)$")
+    @And("^I enter password as (.*)$")
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @When("^I click the \"Login\" button$")
+    @And("^I click the \"Login\" button$")
     public void login() {
         this.homePage = new LoginPage().logIn(this.username, this.password);
     }

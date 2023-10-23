@@ -7,6 +7,7 @@ import com.codeborne.selenide.CollectionCondition;
 
 import aqa.course.pages.CartPage;
 import aqa.course.pages.HomePage;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -25,7 +26,7 @@ public class WorkWithCartSteps {
                 .collect(Collectors.toList());
     }
 
-    @When("^I click cart icon$")
+    @And("^I click cart icon$")
     public void goToCart() {
          this.cartPage = homePage.clickCartButton();
     }
