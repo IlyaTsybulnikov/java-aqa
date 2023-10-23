@@ -10,7 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import aqa.course.pages.LoginPage;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
+import io.qameta.allure.selenide.AllureSelenide;
 
 public class BeforeSteps {
 
@@ -21,6 +24,11 @@ public class BeforeSteps {
         List<String> credentials = getCredentials();
 
         new LoginPage().logIn(credentials.get(0), credentials.get(1));
+    }
+
+    @BeforeAll
+    static void setupAllureReports() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
     private static List<String> getCredentials() {
