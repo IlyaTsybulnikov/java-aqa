@@ -14,13 +14,11 @@ public class NumberOfProductsSteps {
     private ElementsCollection allProducts;
 
     @When("^I get all products on the home page$")
-    @Feature("Check number of products")
     public void getAllProducts() {
         this.allProducts = homePage.getAllProducts();
     }
 
     @Then("^check if number of products equals six$")
-    @Feature("Check number of products")
     public void checkProductNumber() {
         this.allProducts.shouldHave(CollectionCondition.size(6));
     }

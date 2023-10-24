@@ -13,19 +13,16 @@ public class SortProductsSteps {
     private String firstElemBeforeSort;
 
     @When("^I select \"(.*)\" sort option$")
-    @Feature("Check products sort")
     public void selectSortOption(String sortOption) {
         homePage.getSortSelect().selectOptionByValue(sortOption);
     }
 
     @When("^I take first product$")
-    @Feature("Check products sort")
     public void getFirstProduct() {
         firstElemBeforeSort = homePage.getProductName(homePage.getFirstProduct()).getText();
     }
 
     @Then("^check if first product became last$")
-    @Feature("Check products sort")
     public void compareFirstAndLastProducts() {
         homePage.getProductName(homePage.getLastProduct())
                 .shouldHave(Condition.text(firstElemBeforeSort));
