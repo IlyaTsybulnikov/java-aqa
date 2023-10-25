@@ -1,6 +1,6 @@
 Feature: LoginSteps
     As a user
-    I want to log into a site
+    I want to login to a site
 
     Scenario Outline: Check login for different users
     Given that login page is opened

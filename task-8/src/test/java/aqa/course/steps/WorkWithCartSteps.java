@@ -9,7 +9,6 @@ import aqa.course.pages.CartPage;
 import aqa.course.pages.HomePage;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.qameta.allure.Feature;
 
 public class WorkWithCartSteps {
 

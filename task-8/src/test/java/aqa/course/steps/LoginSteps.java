@@ -9,8 +9,6 @@ import aqa.course.pages.LoginPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.qameta.allure.Feature;
-import org.junit.jupiter.api.Test;
 
 public class LoginSteps {
 
