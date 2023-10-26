@@ -32,7 +32,7 @@ public class HomePage {
         return inventoryListProducts.last();
     }
 
-    @Step("Get product name from title")
+    @Step("Get product title")
     public SelenideElement getProductName(SelenideElement product) {
         return product.$x("./div[2]//a");
     }

@@ -1,6 +1,6 @@
+@SolenoidTest
 Feature: LoginSteps
-    As a user
-    I want to login to a site
+    Test to check login to site with several user credentials
 
     Scenario Outline: Check login for different users
     Given that login page is opened

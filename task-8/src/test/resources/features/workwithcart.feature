@@ -1,4 +1,6 @@
+@SolenoidTest
 Feature: WorkWithCartSteps
+  Test if products correctly can be successfully added and removed from cart
 
   Background:
     Given I am logged in to site

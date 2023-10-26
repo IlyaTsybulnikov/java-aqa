@@ -9,6 +9,7 @@ import aqa.course.pages.LoginPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.qameta.allure.Step;
 
 public class LoginSteps {
 
@@ -17,6 +18,7 @@ public class LoginSteps {
     private HomePage homePage;
 
     @Given("^that login page is opened$")
+    @Step("Open Login page")
     public void openLoginPage() {
         open("https://www.saucedemo.com/");
     }
@@ -37,6 +39,7 @@ public class LoginSteps {
     }
 
     @Then("^check if home page is open$")
+    @Step("Check if home page is open")
     public void checkHomePageIsOpen() {
         this.homePage.getAllProducts()
                 .shouldHave(CollectionCondition.sizeNotEqual(0));

@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.SelenideElement;
 
 import aqa.course.pages.CartPage;
 import aqa.course.pages.HomePage;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.qameta.allure.Step;
 
 public class WorkWithCartSteps {
 
@@ -17,11 +19,12 @@ public class WorkWithCartSteps {
     private CartPage cartPage;
 
     @When("^I add three products to cart$")
+    @Step("Get names of first 3 products")
     public void addToCart() {
         this.addedProductNames = homePage.getAllProducts().first(3)
                 .asDynamicIterable().stream()
                 .peek(homePage::clickAddToCartButton)
-                .map(product -> homePage.getProductName(product).getText())
+                .map(this::getProductNameFromTitle)
                 .collect(Collectors.toList());
     }
 
@@ -31,6 +34,7 @@ public class WorkWithCartSteps {
     }
 
     @Then("^check if cart contains selected products$")
+    @Step("Check if cart contains selected products")
     public void checkCartProducts() {
         cartPage.getCartItemNames().shouldHave(
                 CollectionCondition.size(3),
@@ -44,11 +48,17 @@ public class WorkWithCartSteps {
     }
 
     @Then("^check if cart no longer contains third item$")
+    @Step("Check if cart no longer contains third item")
     public void checkThirdItemRemoved() {
         cartPage.getCartItemNames().shouldHave(
                 CollectionCondition.size(2),
                 CollectionCondition.itemWithText(addedProductNames.get(0)),
                 CollectionCondition.itemWithText(addedProductNames.get(1))
         );
+    }
+
+    @Step("Get product name from title")
+    private String getProductNameFromTitle(SelenideElement product) {
+        return homePage.getProductName(product).getText();
     }
 }

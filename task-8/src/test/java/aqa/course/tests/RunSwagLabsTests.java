@@ -1,23 +1,17 @@
 package aqa.course.tests;
 
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
+import org.junit.platform.suite.api.ConfigurationParameter;
+import org.junit.platform.suite.api.IncludeEngines;
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.Suite;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.logevents.SelenideLogger;
+import io.cucumber.junit.platform.engine.Constants;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import io.qameta.allure.selenide.AllureSelenide;
-
-@RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:features",
-        glue = {"aqa.course.steps", "aqa.course.hooks"})
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("aqa/course")
+@SelectClasspathResource("/features")
+@ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME,
+        value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm")
 public class RunSwagLabsTests {
-    @BeforeClass
-    public static void setupAllureReports() {
-        Configuration.headless = true;
-
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-    }
 }

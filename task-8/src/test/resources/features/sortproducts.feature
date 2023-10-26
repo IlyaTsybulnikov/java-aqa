@@ -1,4 +1,6 @@
+@SolenoidTest
 Feature: SortProductsSteps
+  Test if products sort correctly
 
   Background:
     Given I am logged in to site

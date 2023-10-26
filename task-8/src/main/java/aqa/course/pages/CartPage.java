@@ -5,6 +5,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+
 import io.qameta.allure.Step;
 
 public class CartPage {
