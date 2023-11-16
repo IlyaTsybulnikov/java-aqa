@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import aqa.course.databaseConnection.JDBCConnection;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.codeborne.selenide.Configuration;
@@ -32,6 +33,12 @@ public class BeforeSteps {
         List<String> credentials = getCredentials();
 
         new LoginPage().logIn(credentials.get(0), credentials.get(1));
+    }
+
+    @Given("I am connected to mssql server")
+    @Step("Connect to mssql server")
+    public void connectToServer() {
+        JDBCConnection.connectToDB();
     }
 
     @Before(value = "@SolenoidTest")
