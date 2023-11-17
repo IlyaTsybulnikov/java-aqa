@@ -3,7 +3,6 @@ package aqa.course.steps;
 import aqa.course.databaseConnection.JDBCConnection;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.qameta.allure.Step;
 import org.junit.Assert;
 
 import java.sql.ResultSet;
@@ -12,14 +11,12 @@ import java.sql.SQLException;
 public class DatabaseConnectionSteps {
 
     @When("^I send insert request$")
-    @Step("Send insert request")
     public void sendInsertRequest() {
         String query = "INSERT INTO HotelMinistration (Id, Name, Price) VALUES ('123456', 'TestService', 15)";
         JDBCConnection.executeSQLUpdate(query);
     }
 
     @Then("^check if record was created$")
-    @Step("Check if record was created")
     public void checkRecordCreated() throws SQLException {
         String selectInsertedRecord = "SELECT * FROM HotelMinistration WHERE Id='123456'";
         ResultSet rs = JDBCConnection.executeSQLQuery(selectInsertedRecord);
@@ -34,14 +31,12 @@ public class DatabaseConnectionSteps {
     }
 
     @When("^I send update request$")
-    @Step("Send update request")
     public void sendUpdateRequest() {
         String query = "UPDATE HotelMinistration SET Price = 20 WHERE Id='123456'";
         JDBCConnection.executeSQLUpdate(query);
     }
 
     @Then("^check if changes were saved to database$")
-    @Step("Check if changes were saved to database")
     public void checkRecordUpdated() {
         String selectUpdatedRecord = "SELECT * FROM HotelMinistration WHERE Id='123456'";
         ResultSet rs = JDBCConnection.executeSQLQuery(selectUpdatedRecord);
@@ -56,14 +51,12 @@ public class DatabaseConnectionSteps {
     }
 
     @When("^I send delete request$")
-    @Step("Send delete request")
     public void sendDeleteRequest() {
         String query = "DELETE FROM HotelMinistration WHERE Id='123456'";
         JDBCConnection.executeSQLUpdate(query);
     }
 
     @Then("^check if record was deleted$")
-    @Step("Check if record was deleted")
     public void checkRecordDeleted() {
         String selectUpdatedRecord = "SELECT * FROM HotelMinistration WHERE Id='123456'";
         ResultSet rs = JDBCConnection.executeSQLQuery(selectUpdatedRecord);
