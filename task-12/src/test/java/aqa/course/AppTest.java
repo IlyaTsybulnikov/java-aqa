@@ -1,15 +1,9 @@
 package aqa.course;
 
-import static aqa.course.constants.Constants.AVATAR_LINK_BEGINNING;
-import static aqa.course.constants.Constants.LOGIN_URL;
-import static aqa.course.constants.Constants.REGISTER_URL;
-import static aqa.course.constants.Constants.RESOURCES_URL;
-import static aqa.course.constants.Constants.USERS_URL;
+import static aqa.course.constants.Constants.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
-
-import java.util.List;
 
 import aqa.course.pojo.error.ErrorResponse;
 import org.junit.jupiter.api.Assertions;
@@ -18,14 +12,12 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import aqa.course.pojo.authorization.AuthorizationRequest;
-import aqa.course.pojo.authorization.AuthorizationResponse;
+import aqa.course.pojo.authorization.*;
 import aqa.course.pojo.resource.ResourceResponse;
-import aqa.course.pojo.user.UserCreateResponse;
-import aqa.course.pojo.user.UserRequest;
-import aqa.course.pojo.user.UserResponse;
-import aqa.course.pojo.user.UserUpdateResponse;
+import aqa.course.pojo.user.*;
 import io.restassured.http.ContentType;
+
+import java.util.List;
 
 public class AppTest {
 
