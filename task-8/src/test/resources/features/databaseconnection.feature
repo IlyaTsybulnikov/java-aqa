@@ -1,4 +1,3 @@
-@SolenoidTest
 Feature: JDBCConnectionSteps
   Test if database requests work properly
 
