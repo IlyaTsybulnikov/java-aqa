@@ -8,6 +8,8 @@ import static com.codeborne.selenide.Selenide.page;
 public class RecruitmentPage {
 
     private final SelenideElement addCandidateButton = $x("//button[text()=' Add ']");
+    private final SelenideElement candidateNameFilter = $x("//div[div/label[text()='Candidate Name']]" +
+            "//input");
 
     public AddCandidatePage clickAddCandidateButton() {
         addCandidateButton.click();
@@ -18,5 +20,9 @@ public class RecruitmentPage {
     public SelenideElement getCandidateByName(String name) {
 
         return $x("//div[text() = '" + name + "']");
+    }
+
+    public void filterCandidatesList(String candidateName) {
+        candidateNameFilter.setValue(candidateName);
     }
 }

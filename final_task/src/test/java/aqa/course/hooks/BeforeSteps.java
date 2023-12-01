@@ -19,12 +19,14 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class BeforeSteps {
 
+    private final DashboardPage dashboardPage = new DashboardPage();
+
     @Given("I am logged in to site")
     @Step("Open Login page")
     public void openLoginPage() {
         open(Constants.LOGIN_PAGE_URL);
 
-        if(!WebDriverRunner.getWebDriver().getCurrentUrl().contains("login")) {
+        if (!WebDriverRunner.getWebDriver().getCurrentUrl().contains("login")) {
             return;
         }
 
@@ -44,11 +46,21 @@ public class BeforeSteps {
 
     @And("^I go to admin page$")
     public void goToAdminPage() {
-        new DashboardPage().goToAdminPage();
+        dashboardPage.goToAdminPage();
     }
 
     @And("^I go to recruitment page$")
     public void goToRecruitmentPage() {
-        new DashboardPage().goToRecruitmentPage();
+        dashboardPage.goToRecruitmentPage();
+    }
+
+    @And("^I go to \"Leave\" page$")
+    public void goToLeavePage() {
+        dashboardPage.goToLeavePage();
+    }
+
+    @And("^I go to pim page$")
+    public void goToPIMPage() {
+        dashboardPage.goToPIMPage();
     }
 }

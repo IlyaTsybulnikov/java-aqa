@@ -3,11 +3,11 @@ package aqa.course.steps;
 import aqa.course.constants.Constants;
 import aqa.course.pages.AdminPage;
 import aqa.course.pages.CreateUserPage;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.Assertions;
 
 public class AddUserSteps {
@@ -41,6 +41,8 @@ public class AddUserSteps {
 
     @And("^I validate all user fields$")
     public void validateEnteredFields() {
+        adminPage.filterUserList(uniqueUsername);
+
         createUserPage = adminPage.openEditUserPage(uniqueUsername);
         Boolean areFieldsValid = createUserPage.validateUserInfo(uniqueUsername);
 
@@ -51,6 +53,7 @@ public class AddUserSteps {
 
     @Then("^user is created$")
     public void checkIfUserIsCreated() {
+        adminPage.filterUserList(uniqueUsername);
         SelenideElement userRow = adminPage.getUserRowByUsername(uniqueUsername);
 
         userRow.shouldHave(Condition.ownText(uniqueUsername));

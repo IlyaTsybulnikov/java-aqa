@@ -2,7 +2,6 @@ package aqa.course.pages;
 
 import aqa.course.constants.Constants;
 import aqa.course.elements.SiteHeader;
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import java.util.Arrays;
@@ -76,17 +75,22 @@ public class CreateUserPage {
     }
 
     public Boolean validateUserInfo(String uniqueUsername) {
-        userRoleField.should(Condition.exist).shouldBe(Condition.visible).shouldBe(Condition.interactable);
-        employeeNameField.should(Condition.exist).shouldBe(Condition.visible).shouldBe(Condition.interactable);
-        statusField.should(Condition.exist).shouldBe(Condition.visible).shouldBe(Condition.interactable);
-        usernameField.should(Condition.exist).shouldBe(Condition.visible).shouldBe(Condition.interactable);
+        try {
+            Thread.sleep(600);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         String userRole = userRoleField.getText();
         String employeeName = employeeNameField.getValue();
         String status = statusField.getText();
         String username = usernameField.getValue();
 
-        Boolean isEmployeeNameValid = Arrays.stream(getCurrentUserName().split(" ")).allMatch(employeeName::contains);
+        if(employeeName == null || username == null) {
+            return false;
+        }
+
+        boolean isEmployeeNameValid = Arrays.stream(getCurrentUserName().split(" ")).allMatch(employeeName::contains);
 
         return userRole.equals(Constants.USER_ROLE_ADMIN)
                 && isEmployeeNameValid

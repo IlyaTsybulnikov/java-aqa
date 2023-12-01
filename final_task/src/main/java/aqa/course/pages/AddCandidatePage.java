@@ -2,6 +2,7 @@ package aqa.course.pages;
 
 import aqa.course.elements.SiteNavigationSidePanel;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -51,6 +52,9 @@ public class AddCandidatePage {
     }
 
     public void setApplicationDate(String applicationDate) {
+        applicationDateField.sendKeys(Keys.CONTROL + "A");
+        applicationDateField.sendKeys(Keys.BACK_SPACE);
+
         applicationDateField.setValue(applicationDate);
     }
 

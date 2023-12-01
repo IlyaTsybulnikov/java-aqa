@@ -46,6 +46,7 @@ public class AddCandidateSteps {
                 + " " + Constants.TEST_MIDDLE_NAME
                 + " " + Constants.TEST_LAST_NAME;
 
+        recruitmentPage.filterCandidatesList(fullName);
         SelenideElement candidateName = recruitmentPage.getCandidateByName(fullName);
 
         candidateName.shouldHave(Condition.text(fullName));

@@ -23,7 +23,7 @@ public class AddJobTitleSteps {
 
     @And("^I click 'Add' button to add job title$")
     public void clickAddButton() {
-        createJobTitlePage =  jobTitleListPage.clickAddJobTitleButton();
+        createJobTitlePage = jobTitleListPage.clickAddJobTitleButton();
     }
 
     @And("^I enter (.*), (.*) and (.*) into specified fields$")

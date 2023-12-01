@@ -10,6 +10,9 @@ public class AdminPage {
     private final SelenideElement addButton = $x("//button[text()=' Add ']");
     private final SelenideElement topbarMenu = $x("//nav[@class='oxd-topbar-body-nav']");
     private final SelenideElement jobTitlesOption = $x("//li[a[text()='Job Titles']]");
+    private final SelenideElement usernameFilter = $x("//div[@class='oxd-table-filter']" +
+            "[div/div/h5[text()='System Users']]//div[div/label[text()='Username']]//input");
+    private final SelenideElement searchButton = $x("//button[@type='submit'][text()=' Search ']");
 
     public CreateUserPage clickAddButton() {
         addButton.click();
@@ -20,6 +23,12 @@ public class AdminPage {
     public SelenideElement getUserRowByUsername(String username) {
 
         return $x("//div[text() = '" + username + "']");
+    }
+
+    public void filterUserList(String username) {
+        usernameFilter.setValue(username);
+
+        searchButton.click();
     }
 
     public CreateUserPage openEditUserPage(String username) {
