@@ -9,10 +9,8 @@ import static com.codeborne.selenide.Selenide.page;
 
 public class LeaveTopBarMenu {
 
-    private final SelenideElement assignLeaveButton = $x("//nav[@aria-label='Topbar Menu']" +
-            "//a[text()='Assign Leave']");
-    private final SelenideElement myLeaveButton = $x("//nav[@aria-label='Topbar Menu']" +
-            "//a[text()='My Leave']");
+    private final SelenideElement assignLeaveButton = $x("//a[text()='Assign Leave']");
+    private final SelenideElement myLeaveButton = $x("//a[text()='My Leave']");
 
     public AssignLeavePage clickAssignLeaveButton() {
         assignLeaveButton.click();

@@ -1,10 +1,12 @@
 package aqa.course.pages;
 
 import aqa.course.elements.SiteNavigationSidePanel;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.page;
 
 public class AddCandidatePage {
 
@@ -13,60 +15,111 @@ public class AddCandidatePage {
     private final SelenideElement firstNameField = $x("//input[@name='firstName']");
     private final SelenideElement middleNameField = $x("//input[@name='middleName']");
     private final SelenideElement lastNameField = $x("//input[@name='lastName']");
-    private final SelenideElement vacancyInputField = $x("//div[div[label[text()='Vacancy']]]" +
-            "//div[@class='oxd-select-text-input']");
-    private final SelenideElement vacancyOptions = $x("//div[div[label[text()='Vacancy']]]" +
-            "//div[@role='listbox']");
-    private final SelenideElement emailField = $x("//div[div[label[text()='Email']]]//input");
-    private final SelenideElement contactNumberField = $x("//div[div[label" +
-            "[text()='Contact Number']]]//input");
-    private final SelenideElement applicationDateField = $x("//div[div[label" +
-            "[text()='Date of Application']]]//input");
-    private final SelenideElement notesField = $x("//div[div[label[text()='Notes']]]//textarea");
+    private final SelenideElement vacancyInputField = $x("//div[@class='oxd-select-text-input']");
+    private final SelenideElement vacancyOptions = $x("//div[@role='listbox']");
+    private final SelenideElement emailField = $x("(//input)[5]");
+    private final SelenideElement contactNumberField = $x("(//input)[6]");
+    private final SelenideElement applicationDateField = $x("(//input)[9]");
+    private final SelenideElement notesField = $x("//textarea");
     private final SelenideElement saveButton = $x("//button[@type='submit'][text()=' Save ']");
 
 
-    public void setFirstName(String firstName) {
-        firstNameField.setValue(firstName);
-    }
-    public void setMiddleName(String middleName) {
-        middleNameField.setValue(middleName);
+    public AddCandidatePage setFirstName(String firstName) {
+        firstNameField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(firstName);
+
+        return this;
     }
 
-    public void setLastName(String lastName) {
-        lastNameField.setValue(lastName);
+    public AddCandidatePage setMiddleName(String middleName) {
+        middleNameField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(middleName);
+
+        return this;
     }
 
-    public void setVacancy() {
-        vacancyInputField.click();
+    public AddCandidatePage setLastName(String lastName) {
+        lastNameField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(lastName);
+
+        return this;
+    }
+
+    public AddCandidatePage setVacancy() {
+        vacancyInputField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .click();
 
         vacancyOptions.$x(".//span[1]").click();
+
+        return this;
     }
 
-    public void setEmail(String email) {
-        emailField.setValue(email);
+    public AddCandidatePage setEmail(String email) {
+        emailField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(email);
+
+        return this;
     }
 
-    public void setContactNumber(String contactNumber) {
-        contactNumberField.setValue(contactNumber);
+    public AddCandidatePage setContactNumber(String contactNumber) {
+        contactNumberField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(contactNumber);
+
+        return this;
     }
 
-    public void setApplicationDate(String applicationDate) {
-        applicationDateField.sendKeys(Keys.CONTROL + "A");
+    public AddCandidatePage setApplicationDate(String applicationDate) {
+        applicationDateField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .sendKeys(Keys.CONTROL + "A");
         applicationDateField.sendKeys(Keys.BACK_SPACE);
 
         applicationDateField.setValue(applicationDate);
+
+        return this;
     }
 
-    public void setNotes(String notes) {
-        notesField.setValue(notes);
+    public AddCandidatePage setNotes(String notes) {
+        notesField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(notes);
+
+        return this;
     }
 
-    public void clickSaveButton() {
-        saveButton.click();
+    public AddCandidatePage clickSaveButton() {
+        saveButton
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .click();
+
+        return this;
     }
 
-    public void goToCandidatesList() {
+    public RecruitmentPage goToCandidatesList() {
         this.navigationSidePanel.clickGoToRecruitmentPage();
+
+        return page(RecruitmentPage.class);
     }
 }

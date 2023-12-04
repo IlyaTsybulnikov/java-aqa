@@ -12,10 +12,10 @@ import static com.codeborne.selenide.Selenide.page;
 
 public class SiteNavigationSidePanel {
 
-    private final SelenideElement adminButton = $x("//li[a/span[text()='Admin']]");
-    private final SelenideElement recruitmentButton = $x("//li[a/span[text()='Recruitment']]");
-    private final SelenideElement leaveButton = $x("//li[a/span[text()='Leave']]");
-    private final SelenideElement pimButton = $x("//li[a/span[text()='PIM']]");
+    private final SelenideElement adminButton = $x("//span[text()='Admin']");
+    private final SelenideElement recruitmentButton = $x("//span[text()='Recruitment']");
+    private final SelenideElement leaveButton = $x("//span[text()='Leave']");
+    private final SelenideElement pimButton = $x("//span[text()='PIM']");
 
     @Step("Click go to admin tab")
     public AdminPage clickGoToAdminPage() {

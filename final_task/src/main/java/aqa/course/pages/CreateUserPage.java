@@ -2,6 +2,7 @@ package aqa.course.pages;
 
 import aqa.course.constants.Constants;
 import aqa.course.elements.SiteHeader;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import java.util.Arrays;
@@ -11,57 +12,61 @@ import static com.codeborne.selenide.Selenide.page;
 
 public class CreateUserPage {
 
-    private final SelenideElement userRoleField = $x("//div[div/label[text()='User Role']]" +
-            "//div[@class='oxd-select-text oxd-select-text--active']");
-    private final SelenideElement userRoleOptions = $x("//div[div/label[text()='User Role']]" +
-            "//div[@role='listbox']");
+    private final SelenideElement userRoleField = $x("//div[@class='oxd-select-text-input']");
+    private final SelenideElement userRoleOptions = $x("//div[@role='listbox']");
 
-    private final SelenideElement statusField = $x("//div[div/label[text()='Status']]" +
-            "//div[@class='oxd-select-text oxd-select-text--active']/div[1]");
-    private final SelenideElement statusFieldOptions = $x("//div[div/label[text()='Status']]" +
-            "//div[@role='listbox']");
+    private final SelenideElement statusField = $x("(//div[@class='oxd-select-text-input'])[2]");
+    private final SelenideElement statusFieldOptions = $x("//div[@role='listbox']");
 
-    private final SelenideElement employeeNameField = $x("//div[div/label[text()='Employee Name']]" +
-            "//div[@class='oxd-autocomplete-text-input oxd-autocomplete-text-input--active']/input");
-    private final SelenideElement employeeNameRoleFirstOption = $x("//div[div/label" +
-            "[text()='Employee Name']]//div[@role='listbox']//span[1]");
+    private final SelenideElement employeeNameField = $x("(//input)[2]");
+    private final SelenideElement employeeNameRoleFirstOption = $x("//div[@role='listbox']//span");
 
-    private final SelenideElement usernameField = $x("//div[div/label[text()='Username']]" +
-            "//input[@class='oxd-input oxd-input--active']");
-    private final SelenideElement passwordField = $x("//div[div/label[text()='Password']]" +
-            "//input[@type='password']");
-    private final SelenideElement confirmPasswordField = $x("//div[div/label[text()='Confirm Password']]" +
-            "//input[@type='password']");
-    private final SelenideElement saveButton = $x("//button[@type='submit'][text() = ' Save ']");
-    private final SelenideElement cancelButton = $x("//button[@type='button'][text() = ' Cancel ']");
+    private final SelenideElement usernameField = $x("(//input)[3]");
+    private final SelenideElement passwordField = $x("//input[@type='password']");
+    private final SelenideElement confirmPasswordField = $x("(//input[@type='password'])[2]");
+    private final SelenideElement saveButton = $x("//button[@type='submit'][text()=' Save ']");
+    private final SelenideElement cancelButton = $x("//button[@type='button'][text()=' Cancel ']");
+    private final SelenideElement spinner = $x("//div[@class='oxd-loading-spinner-container']");
 
     private final SiteHeader siteHeader = new SiteHeader();
 
-    public void enterUserRole(String role) {
+    public CreateUserPage enterUserRole(String role) {
         userRoleField.click();
         userRoleOptions.$x(".//span[text()='" + role + "']").click();
+
+        return this;
     }
 
-    public void enterEmployeeName(String name) {
+    public CreateUserPage enterEmployeeName(String name) {
         employeeNameField.setValue(name);
         employeeNameRoleFirstOption.click();
+
+        return this;
     }
 
-    public void enterStatus(String status) {
+    public CreateUserPage enterStatus(String status) {
         statusField.click();
         statusFieldOptions.$x(".//span[text()='" + status + "']").click();
+
+        return this;
     }
 
-    public void enterUsername(String username) {
+    public CreateUserPage enterUsername(String username) {
         usernameField.setValue(username);
+
+        return this;
     }
 
-    public void enterPassword(String password) {
+    public CreateUserPage enterPassword(String password) {
         passwordField.setValue(password);
+
+        return this;
     }
 
-    public void confirmPassword(String password) {
+    public CreateUserPage confirmPassword(String password) {
         confirmPasswordField.setValue(password);
+
+        return this;
     }
 
     public AdminPage clickSaveUser() {
@@ -75,15 +80,9 @@ public class CreateUserPage {
     }
 
     public Boolean validateUserInfo(String uniqueUsername) {
-        try {
-            Thread.sleep(600);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        String userRole = userRoleField.getText();
+        String userRole = userRoleField.shouldNotHave(Condition.text(Constants.PLACEHOLDER_SELECT)).getText();
         String employeeName = employeeNameField.getValue();
-        String status = statusField.getText();
+        String status = statusField.shouldNotHave(Condition.text(Constants.PLACEHOLDER_SELECT)).getText();
         String username = usernameField.getValue();
 
         if(employeeName == null || username == null) {
@@ -98,7 +97,18 @@ public class CreateUserPage {
                 && username.equals(uniqueUsername);
     }
 
-    public void cancelUserEdit() {
+    public AdminPage cancelUserEdit() {
         cancelButton.click();
+
+        spinner
+                .shouldNot(Condition.exist)
+                .shouldNotBe(Condition.visible);
+
+        this.siteHeader.getPageName()
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldNotHave(Condition.ownText("Admin"));
+
+        return page(AdminPage.class);
     }
 }

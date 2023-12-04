@@ -10,8 +10,8 @@ public class PIMPage {
 
     private final ElementsCollection headerButtons = $$x("//nav[@aria-label='Topbar Menu']//li");
     private final ElementsCollection tableFilterButtons = $$x("//div[@class='oxd-table-filter-area']//button");
-    private final ElementsCollection tableFilterFields = $$x("//div[@class='oxd-table-filter']" +
-            "//div[@class='oxd-grid-item oxd-grid-item--gutters']");
+    private final ElementsCollection tableFilterFields = $$x("//div" +
+            "[@class='oxd-grid-item oxd-grid-item--gutters']");
     private final SelenideElement recordsTable = $x("//div[@class='oxd-table orangehrm-employee-list']");
     private final SelenideElement tableFilter = $x("//div[@class='oxd-table-filter']");
     private final SelenideElement tableAddButton = $x("//div[@class='orangehrm-header-container']/button");

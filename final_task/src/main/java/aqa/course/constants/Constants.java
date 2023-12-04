@@ -22,6 +22,7 @@ public class Constants {
     public static final String TEST_NOTES = "test notes for test candidate";
     public static final String TEST_LEAVE_TYPE = "CAN - Bereavement";
     public static final String TEST_LEAVE_SCHEDULED_TYPE = "Scheduled";
+    public static final String PLACEHOLDER_SELECT = "-- Select --";
 
     public static final List<String> TEST_DASHBOARD_ELEMENT_NAMES = Arrays.asList(
             "Time at Work",

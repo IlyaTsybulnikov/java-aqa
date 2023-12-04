@@ -1,25 +1,62 @@
 package aqa.course.pages;
 
+import aqa.course.constants.Constants;
+import aqa.course.elements.SiteHeader;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage {
 
     private final SelenideElement usernameField = $x("//input[@name='username']");
     private final SelenideElement passwordField = $x("//input[@name='password']");
     private final SelenideElement loginButton = $x("//button[@type='submit']");
+    private final SiteHeader siteHeader = new SiteHeader();
 
-    @Step("Login to site")
-    @Description("Enter username and password, and click 'Log In' button")
-    public DashboardPage logIn(String username, String password) {
-        usernameField.setValue(username);
-        passwordField.setValue(password);
-        loginButton.click();
+    public LoginPage openLoginPage() {
+        open(Constants.LOGIN_PAGE_URL);
+
+        if (this.siteHeader.getPageName().getText().equals("Dashboard")) logout();
+
+        return this;
+    }
+
+    public LoginPage enterUsername(String username) {
+        usernameField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(username);
+
+        return this;
+    }
+
+    public LoginPage enterPassword(String password) {
+        passwordField
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.editable)
+                .setValue(password);
+
+        return this;
+    }
+
+    public DashboardPage clickLoginButton() {
+        loginButton
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.interactable)
+                .click();
 
         return page(DashboardPage.class);
+    }
+
+    public SelenideElement getLoginButton() {
+        return loginButton;
+    }
+
+    public LoginPage logout() {
+        return this.siteHeader.clickLogout();
     }
 }

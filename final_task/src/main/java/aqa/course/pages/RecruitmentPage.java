@@ -1,5 +1,6 @@
 package aqa.course.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -8,8 +9,7 @@ import static com.codeborne.selenide.Selenide.page;
 public class RecruitmentPage {
 
     private final SelenideElement addCandidateButton = $x("//button[text()=' Add ']");
-    private final SelenideElement candidateNameFilter = $x("//div[div/label[text()='Candidate Name']]" +
-            "//input");
+    private final SelenideElement candidateNameFilter = $x("(//input)[2]");
 
     public AddCandidatePage clickAddCandidateButton() {
         addCandidateButton.click();
@@ -19,10 +19,14 @@ public class RecruitmentPage {
 
     public SelenideElement getCandidateByName(String name) {
 
-        return $x("//div[text() = '" + name + "']");
+        return $x("//div[text() = '" + name + "']")
+                .should(Condition.exist)
+                .shouldBe(Condition.visible);
     }
 
-    public void filterCandidatesList(String candidateName) {
+    public RecruitmentPage filterCandidatesList(String candidateName) {
         candidateNameFilter.setValue(candidateName);
+
+        return this;
     }
 }

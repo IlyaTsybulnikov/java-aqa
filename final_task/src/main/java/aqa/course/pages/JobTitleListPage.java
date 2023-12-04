@@ -20,10 +20,12 @@ public class JobTitleListPage {
         return $x("//div[text()='" + jobTitle + "']");
     }
 
-    public void deleteJobTitleByTitle(String jobTitle) {
+    public JobTitleListPage deleteJobTitleByTitle(String jobTitle) {
         $x("//div[div/div[text()='" + jobTitle + "']]" +
                 "//button[i[@class='oxd-icon bi-trash']]").click();
 
         confirmDeleteButton.click();
+
+        return this;
     }
 }

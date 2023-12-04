@@ -3,24 +3,36 @@ package aqa.course.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.codeborne.selenide.Selenide.$x;
 
 public class LeaveDetailsPage {
 
-    private final SelenideElement employeeName = $x("//div[div/label[text()='Employee Name']]//p");
-    private final SelenideElement leaveDates = $x("//div[div/label[text()='Leave requested for']]//p");
+    private final SelenideElement employeeName = $x("(//p)[2]");
+    private final SelenideElement leaveDates = $x("(//p)[3]");
 
     public Boolean validateLeave(String fromDate, String toDate, String name) {
-        try {
-            Thread.sleep(600);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        List<String> nameParts = Arrays.asList(name.split(" "));
 
-        String leaveEmployeeName = employeeName.should(Condition.exist).shouldBe(Condition.visible).getText();
-        String leaveRequestedDates = leaveDates.should(Condition.exist).shouldBe(Condition.visible).getText();
+        String leaveEmployeeName = employeeName
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .should(Condition.appear)
+                .shouldNotHave(Condition.exactText(""))
+                .getText();
 
-        return leaveEmployeeName.equals(name)
+        String leaveRequestedDates = leaveDates
+                .should(Condition.exist)
+                .shouldBe(Condition.visible)
+                .should(Condition.appear)
+                .shouldNotHave(Condition.exactText(""))
+                .getText();
+
+        List<String> leaveEmployeeNameParts = Arrays.asList(leaveEmployeeName.split(" "));
+
+        return nameParts.stream().allMatch(leaveEmployeeNameParts::contains)
                 && leaveRequestedDates.startsWith(fromDate)
                 && leaveRequestedDates.endsWith(toDate);
     }
