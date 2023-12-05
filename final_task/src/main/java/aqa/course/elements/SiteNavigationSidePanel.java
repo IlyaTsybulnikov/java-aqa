@@ -4,6 +4,7 @@ import aqa.course.pages.AdminPage;
 import aqa.course.pages.LeavePage;
 import aqa.course.pages.PIMPage;
 import aqa.course.pages.RecruitmentPage;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -16,9 +17,10 @@ public class SiteNavigationSidePanel {
     private final SelenideElement recruitmentButton = $x("//span[text()='Recruitment']");
     private final SelenideElement leaveButton = $x("//span[text()='Leave']");
     private final SelenideElement pimButton = $x("//span[text()='PIM']");
+    private final SelenideElement navigationPanel = $x("//nav[@class='oxd-navbar-nav']");
 
-    @Step("Click go to admin tab")
-    public AdminPage clickGoToAdminPage() {
+    @Step("Click open admin page button")
+    public AdminPage clickOpenAdminPage() {
         adminButton.click();
 
         return page(AdminPage.class);
@@ -43,5 +45,10 @@ public class SiteNavigationSidePanel {
         pimButton.click();
 
         return page(PIMPage.class);
+    }
+
+    @Step("Verify that navigation panel is enabled")
+    public void verifyNavPanelIsEnabled() {
+        navigationPanel.shouldBe(Condition.enabled);
     }
 }

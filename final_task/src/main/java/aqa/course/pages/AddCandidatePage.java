@@ -3,6 +3,7 @@ package aqa.course.pages;
 import aqa.course.elements.SiteNavigationSidePanel;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -23,102 +24,74 @@ public class AddCandidatePage {
     private final SelenideElement notesField = $x("//textarea");
     private final SelenideElement saveButton = $x("//button[@type='submit'][text()=' Save ']");
 
-
+    @Step("Set candidate's first name as {0}")
     public AddCandidatePage setFirstName(String firstName) {
-        firstNameField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .setValue(firstName);
+        firstNameField.shouldBe(Condition.editable).setValue(firstName);
 
         return this;
     }
 
+    @Step("Set candidate's middle name as {0}")
     public AddCandidatePage setMiddleName(String middleName) {
-        middleNameField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .setValue(middleName);
+        middleNameField.shouldBe(Condition.editable).setValue(middleName);
 
         return this;
     }
 
+    @Step("Set candidate's last name as {0}")
     public AddCandidatePage setLastName(String lastName) {
-        lastNameField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .setValue(lastName);
+        lastNameField.shouldBe(Condition.editable).setValue(lastName);
 
         return this;
     }
 
+    @Step("Set candidate's vacancy")
     public AddCandidatePage setVacancy() {
-        vacancyInputField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .click();
-
+        vacancyInputField.shouldBe(Condition.enabled).click();
         vacancyOptions.$x(".//span[1]").click();
 
         return this;
     }
 
+    @Step("Set candidate's email as {0}")
     public AddCandidatePage setEmail(String email) {
-        emailField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .setValue(email);
+        emailField.shouldBe(Condition.editable).setValue(email);
 
         return this;
     }
 
+    @Step("Set candidate's contact number as {0}")
     public AddCandidatePage setContactNumber(String contactNumber) {
-        contactNumberField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .setValue(contactNumber);
+        contactNumberField.shouldBe(Condition.editable).setValue(contactNumber);
 
         return this;
     }
 
+    @Step("Set candidate's application date as {0}")
     public AddCandidatePage setApplicationDate(String applicationDate) {
-        applicationDateField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .sendKeys(Keys.CONTROL + "A");
-        applicationDateField.sendKeys(Keys.BACK_SPACE);
-
+        applicationDateField.shouldBe(Condition.editable).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
         applicationDateField.setValue(applicationDate);
 
         return this;
     }
 
+    @Step("Set candidate's notes")
     public AddCandidatePage setNotes(String notes) {
-        notesField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .setValue(notes);
+        notesField.shouldBe(Condition.editable).setValue(notes);
 
         return this;
     }
 
+    @Step("Click save candidate")
     public AddCandidatePage clickSaveButton() {
-        saveButton
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .click();
+        saveButton.shouldBe(Condition.enabled).click();
 
         return this;
     }
 
+    @Step("Go to candidates list")
     public RecruitmentPage goToCandidatesList() {
-        this.navigationSidePanel.clickGoToRecruitmentPage();
+        navigationSidePanel.clickGoToRecruitmentPage();
 
         return page(RecruitmentPage.class);
     }

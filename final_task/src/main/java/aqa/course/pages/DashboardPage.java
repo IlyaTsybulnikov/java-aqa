@@ -2,59 +2,46 @@ package aqa.course.pages;
 
 import aqa.course.elements.SiteHeader;
 import aqa.course.elements.SiteNavigationSidePanel;
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.$$x;
 
 public class DashboardPage {
 
-    private final SelenideElement dashboardGrid = $x("//div[@class='oxd-grid-3 " +
-            "orangehrm-dashboard-grid']");
+    private final ElementsCollection dashboardElementsTitles = $$x("//div" +
+            "[@class='orangehrm-dashboard-widget-name']//p");
 
     private final SiteNavigationSidePanel siteNavigationSidePanel = new SiteNavigationSidePanel();
     private final SiteHeader siteHeader = new SiteHeader();
 
+    @Step("Go to admin page")
     public AdminPage goToAdminPage() {
-        return this.siteNavigationSidePanel.clickGoToAdminPage();
+        return siteNavigationSidePanel.clickOpenAdminPage();
     }
 
+    @Step("Go to recruitment page")
     public RecruitmentPage goToRecruitmentPage() {
-        return this.siteNavigationSidePanel.clickGoToRecruitmentPage();
+        return siteNavigationSidePanel.clickGoToRecruitmentPage();
     }
 
+    @Step("Go to leave page")
     public LeavePage goToLeavePage() {
-        return this.siteNavigationSidePanel.clickGoToLeavePage();
+        return siteNavigationSidePanel.clickGoToLeavePage();
     }
 
+    @Step("Go to PIM page")
     public PIMPage goToPIMPage() {
-        return this.siteNavigationSidePanel.clickGoToPIMPage();
+        return siteNavigationSidePanel.clickGoToPIMPage();
     }
 
-    public ElementsCollection getGridElements() {
-        return dashboardGrid
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .$$x(".//div[@class='oxd-grid-item oxd-grid-item--gutters orangehrm-dashboard-widget']");
+    @Step("Get Dashboard page elements")
+    public ElementsCollection getGridElementsTitles() {
+        return dashboardElementsTitles;
     }
 
-    public String getPageElementName(SelenideElement pageElement) {
-        return pageElement
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .$x(".//p").getText();
-    }
-
-    public String getCurrentUserName() {
-        return this.siteHeader.getCurrentUserName();
-    }
-
-    public LoginPage clickLogout() {
-        return this.siteHeader.clickLogout();
-    }
-
+    @Step("Logout")
     public LoginPage logout() {
-        return this.siteHeader.clickLogout();
+        return siteHeader.clickLogout();
     }
 }

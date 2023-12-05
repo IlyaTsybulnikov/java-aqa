@@ -3,7 +3,6 @@ package aqa.course.tests;
 import aqa.course.configuration.BaseTest;
 import aqa.course.configuration.TestConfiguration;
 import aqa.course.pages.DashboardPage;
-import com.codeborne.selenide.Condition;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +17,6 @@ public class LogoutTest
     public void logoutTest() {
         page(DashboardPage.class)
                 .logout()
-                .getLoginButton()
-                .should(Condition.exist)
-                .shouldBe(Condition.visible);
+                .verifyPageTitleIsVisible();
     }
 }

@@ -16,13 +16,13 @@ public class Constants {
     public static final String TEST_FIRST_NAME = "testFN";
     public static final String TEST_MIDDLE_NAME = "testMN";
     public static final String TEST_LAST_NAME = "testLN";
+    public static final String TEST_FULL_NAME = TEST_FIRST_NAME + " " + TEST_MIDDLE_NAME + " " + TEST_LAST_NAME;
     public static final String TEST_EMAIL = "testemail@mail.com";
     public static final String TEST_CONTACT_NUMBER = "+123456789";
     public static final String TEST_APPLICATION_DATE = "2020-11-11";
     public static final String TEST_NOTES = "test notes for test candidate";
     public static final String TEST_LEAVE_TYPE = "CAN - Bereavement";
     public static final String TEST_LEAVE_SCHEDULED_TYPE = "Scheduled";
-    public static final String PLACEHOLDER_SELECT = "-- Select --";
 
     public static final List<String> TEST_DASHBOARD_ELEMENT_NAMES = Arrays.asList(
             "Time at Work",

@@ -6,7 +6,6 @@ import aqa.course.constants.Constants;
 import aqa.course.pages.AssignLeavePage;
 import aqa.course.pages.DashboardPage;
 import io.qameta.allure.Description;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -29,13 +28,16 @@ public class AssignLeaveTest
         String fromDate = dtf.format(lastDayOfYear.minusDays(30));
         String toDate = dtf.format(lastDayOfYear);
 
-        Boolean leaveIsValid = page(DashboardPage.class)
+        String newEmployeeName =
+                 page(DashboardPage.class)
                 .goToLeavePage()
                 .clickAssignLeaveButton()
-                .setEmployeeName(currentUserName)
                 .setLeaveType(Constants.TEST_LEAVE_TYPE)
                 .setFromDate(fromDate)
                 .setToDate(toDate)
+                .setEmployeeName(currentUserName);
+
+        page(AssignLeavePage.class)
                 .clickAssignButton()
                 .clickOkModalButton()
                 .clickMyLeaveButton()
@@ -43,8 +45,6 @@ public class AssignLeaveTest
                 .filterMyLeaves(fromDate, toDate, Constants.TEST_LEAVE_SCHEDULED_TYPE)
                 .checkIfLeaveCreated()
                 .openLeaveDetails()
-                .validateLeave(fromDate, toDate, currentUserName);
-
-        Assertions.assertTrue(leaveIsValid);
+                .validateLeave(fromDate, toDate, newEmployeeName);
     }
 }

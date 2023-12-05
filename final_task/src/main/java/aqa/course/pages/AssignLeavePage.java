@@ -3,6 +3,7 @@ package aqa.course.pages;
 import aqa.course.elements.SiteHeader;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -22,17 +23,20 @@ public class AssignLeavePage {
 
     private final SiteHeader siteHeader = new SiteHeader();
 
+    @Step("Get current user name")
     public String getCurrentUserName() {
-        return this.siteHeader.getCurrentUserName();
+        return siteHeader.getCurrentUserName();
     }
 
-    public AssignLeavePage setEmployeeName(String name) {
+    @Step("Set leave's employee name as {0}")
+    public String setEmployeeName(String name) {
         employeeNameInput.setValue(name);
         employeeNameFirstOption.click();
 
-        return this;
+        return employeeNameInput.getValue();
     }
 
+    @Step("Set leave's leave type as {0}")
     public AssignLeavePage setLeaveType(String leaveType) {
         leaveTypeField.click();
         leaveTypeOptions.$x(".//span[text()='" + leaveType + "']").click();
@@ -40,35 +44,32 @@ public class AssignLeavePage {
         return this;
     }
 
+    @Step("Set leave's fromDate to {0}")
     public AssignLeavePage setFromDate(String fromDate) {
-        fromDateInput
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .sendKeys(Keys.CONTROL + "A");
-        fromDateInput.sendKeys(Keys.BACK_SPACE);
-
+        fromDateInput.shouldBe(Condition.visible).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
         fromDateInput.setValue(fromDate);
 
         return this;
     }
 
+    @Step("Set leave's toDate to {0}")
     public AssignLeavePage setToDate(String toDate) {
-        toDateInput.sendKeys(Keys.CONTROL + "A");
-        toDateInput.sendKeys(Keys.BACK_SPACE);
-
+        toDateInput.sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
         toDateInput.setValue(toDate);
 
         return this;
     }
 
+    @Step("Click assign leave button")
     public AssignLeavePage clickAssignButton() {
         assignButton.click();
 
-        spinner.should(Condition.exist).shouldBe(Condition.visible).should(Condition.appear);
+        spinner.should(Condition.appear);
 
         return this;
     }
 
+    @Step("Click 'Ok' on modal window")
     public LeavePage clickOkModalButton() {
         okModalButton.click();
 

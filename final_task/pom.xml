@@ -19,16 +19,29 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.codeborne</groupId>
-      <artifactId>selenide</artifactId>
-      <version>6.19.1</version>
-    </dependency>
-    <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-selenide</artifactId>
       <version>2.24.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-junit5</artifactId>
+      <version>2.24.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-java-commons</artifactId>
+      <version>2.24.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>selenide</artifactId>
+      <version>6.19.1</version>
+    </dependency>
+
     <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-suite-api</artifactId>
@@ -60,9 +73,10 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-java-commons</artifactId>
-      <version>2.24.0</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.10.1</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -77,7 +91,6 @@
             <source>11</source>
             <target>11</target>
             <fork>true</fork>
-
           </configuration>
         </plugin>
         <plugin>
@@ -87,7 +100,6 @@
           <configuration>
             <argLine>
               -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
-              -Dcucumber.options="--plugin io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
             </argLine>
             <properties>
               <property>
@@ -95,10 +107,15 @@
                 <value>io.qameta.allure.junit5.AllureJunit5</value>
               </property>
             </properties>
-            <systemPropertyVariables>
-              <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-              <selenide.headless>false</selenide.headless>
-            </systemPropertyVariables>
+            <systemProperties>
+              <property>
+                <name>allure.results.directory</name>
+                <value>target/allure-results</value>
+              </property>
+            </systemProperties>
+            <!--<systemPropertyVariables>
+              <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
+            </systemPropertyVariables>-->
           </configuration>
           <dependencies>
             <dependency>
@@ -106,6 +123,16 @@
               <artifactId>aspectjweaver</artifactId>
               <version>${aspectj.version}</version>
             </dependency>
+            <!--<dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter-api</artifactId>
+              <version>5.10.1</version>
+            </dependency>
+            <dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter-engine</artifactId>
+              <version>5.10.0</version>
+            </dependency>-->
           </dependencies>
         </plugin>
         <plugin>
@@ -114,11 +141,22 @@
           <version>2.12.0</version>
           <configuration>
             <reportVersion>2.24.0</reportVersion>
-            <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+<!--            <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>-->
           </configuration>
         </plugin>
 
       </plugins>
     </pluginManagement>
   </build>
+
+  <reporting>
+    <excludeDefaults>true</excludeDefaults>
+    <plugins>
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.12.0</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

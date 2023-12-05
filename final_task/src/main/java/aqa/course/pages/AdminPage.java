@@ -3,6 +3,7 @@ package aqa.course.pages;
 import aqa.course.elements.SiteHeader;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.page;
@@ -15,60 +16,40 @@ public class AdminPage {
     private final SelenideElement usernameFilter = $x("(//input" +
             "[@class='oxd-input oxd-input--active'])[2]");
     private final SelenideElement searchButton = $x("//button[@type='submit'][text()=' Search ']");
-    private final SelenideElement spinner = $x("//div[@class='oxd-loading-spinner-container']");
 
     private final SiteHeader siteHeader = new SiteHeader();
 
+    @Step("Click add user")
     public CreateUserPage clickAddButton() {
         addButton.click();
 
         return page(CreateUserPage.class);
     }
 
-    public SelenideElement getUserRowByUsername(String username) {
-
-        return $x("//div[text() = '" + username + "']");
-    }
-
+    @Step("Filter users by '{0}' username")
     public AdminPage filterUserList(String username) {
-        usernameFilter
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.editable)
-                .setValue(username);
+        siteHeader.getPageName().shouldHave(Condition.ownText("User Management"));
 
-        searchButton
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .click();
+        usernameFilter.shouldBe(Condition.editable).setValue(username);
+
+        searchButton.shouldBe(Condition.enabled).click();
 
         return this;
     }
 
-    public CreateUserPage openEditUserPage(String username) {
+    @Step("CLick edit button on {0} user table row")
+    public CreateUserPage openEditNewUserPage(String username) {
         $x("//div[div/div[text()='" + username + "']]" +
                 "//button[i[@class='oxd-icon bi-pencil-fill']]").click();
 
         return page(CreateUserPage.class);
     }
 
+    @Step("Go to job title list")
     public JobTitleListPage goToJobTitleList() {
         topbarMenu.$x(".//span[@class='oxd-topbar-body-nav-tab-item'][text()='Job ']").click();
         jobTitlesOption.click();
 
         return page(JobTitleListPage.class);
-    }
-
-    public AdminPage waitForSpinnerToDisappear() {
-        spinner
-                .shouldNot(Condition.exist)
-                .shouldNotBe(Condition.visible);
-
-        this.siteHeader.getPageName()
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldHave(Condition.ownText("User Management"));
-
-        return this;
     }
 }

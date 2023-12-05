@@ -6,12 +6,10 @@ import aqa.course.constants.Constants;
 import aqa.course.pages.DashboardPage;
 import com.codeborne.selenide.Condition;
 import io.qameta.allure.Description;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.page;
 
-@Feature("Add recruitment candidate")
 public class AddCandidateTest
         extends BaseTest
         implements TestConfiguration {
@@ -19,9 +17,6 @@ public class AddCandidateTest
     @Test
     @Description("Creation of new candidate")
     public void createNewCandidate() {
-        String fullName = Constants.TEST_FIRST_NAME
-                + " " + Constants.TEST_MIDDLE_NAME
-                + " " + Constants.TEST_LAST_NAME;
 
         page(DashboardPage.class)
                 .goToRecruitmentPage()
@@ -36,8 +31,8 @@ public class AddCandidateTest
                 .setNotes(Constants.TEST_NOTES)
                 .clickSaveButton()
                 .goToCandidatesList()
-                .filterCandidatesList(fullName)
-                .getCandidateByName(fullName)
-                .shouldHave(Condition.text(fullName));
+                .filterCandidatesList(Constants.TEST_FULL_NAME)
+                .getCandidateByName(Constants.TEST_FULL_NAME)
+                .shouldHave(Condition.text(Constants.TEST_FULL_NAME));
     }
 }

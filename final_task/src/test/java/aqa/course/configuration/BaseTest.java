@@ -13,6 +13,7 @@ public class BaseTest {
         Configuration.browser = Constants.BROWSER_CHROME;
         Configuration.browserSize = Constants.BROWSER_SIZE_FULL_HD;
         Configuration.timeout = 6000;
+//        Configuration.headless = true;
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }

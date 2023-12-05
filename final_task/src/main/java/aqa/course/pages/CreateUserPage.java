@@ -4,8 +4,7 @@ import aqa.course.constants.Constants;
 import aqa.course.elements.SiteHeader;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-
-import java.util.Arrays;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.page;
@@ -25,11 +24,10 @@ public class CreateUserPage {
     private final SelenideElement passwordField = $x("//input[@type='password']");
     private final SelenideElement confirmPasswordField = $x("(//input[@type='password'])[2]");
     private final SelenideElement saveButton = $x("//button[@type='submit'][text()=' Save ']");
-    private final SelenideElement cancelButton = $x("//button[@type='button'][text()=' Cancel ']");
-    private final SelenideElement spinner = $x("//div[@class='oxd-loading-spinner-container']");
 
     private final SiteHeader siteHeader = new SiteHeader();
 
+    @Step("Enter user's role as {0}")
     public CreateUserPage enterUserRole(String role) {
         userRoleField.click();
         userRoleOptions.$x(".//span[text()='" + role + "']").click();
@@ -37,13 +35,15 @@ public class CreateUserPage {
         return this;
     }
 
-    public CreateUserPage enterEmployeeName(String name) {
-        employeeNameField.setValue(name);
+    @Step("Enter user's employee name as current username")
+    public String enterEmployeeNameAsCurrentUsername() {
+        employeeNameField.setValue(siteHeader.getCurrentUserName());
         employeeNameRoleFirstOption.click();
 
-        return this;
+        return employeeNameField.getValue();
     }
 
+    @Step("Enter user's status as {0}")
     public CreateUserPage enterStatus(String status) {
         statusField.click();
         statusFieldOptions.$x(".//span[text()='" + status + "']").click();
@@ -51,64 +51,42 @@ public class CreateUserPage {
         return this;
     }
 
+    @Step("Enter user's username as {0}")
     public CreateUserPage enterUsername(String username) {
         usernameField.setValue(username);
 
         return this;
     }
 
+    @Step("Enter user's password as {0}")
     public CreateUserPage enterPassword(String password) {
         passwordField.setValue(password);
 
         return this;
     }
 
+    @Step("Confirm user's password as {0}")
     public CreateUserPage confirmPassword(String password) {
         confirmPasswordField.setValue(password);
 
         return this;
     }
 
+    @Step("Click save user button")
     public AdminPage clickSaveUser() {
         saveButton.click();
 
         return page(AdminPage.class);
     }
 
-    public String getCurrentUserName() {
-        return this.siteHeader.getCurrentUserName();
-    }
+    @Step("Validate '{0}' user's info")
+    public void validateUserInfo(String uniqueUsername, String newEmployeeName) {
+        userRoleField.shouldHave(Condition.exactText(Constants.USER_ROLE_ADMIN));
 
-    public Boolean validateUserInfo(String uniqueUsername) {
-        String userRole = userRoleField.shouldNotHave(Condition.text(Constants.PLACEHOLDER_SELECT)).getText();
-        String employeeName = employeeNameField.getValue();
-        String status = statusField.shouldNotHave(Condition.text(Constants.PLACEHOLDER_SELECT)).getText();
-        String username = usernameField.getValue();
+        employeeNameField.shouldHave(Condition.exactValue(newEmployeeName));
 
-        if(employeeName == null || username == null) {
-            return false;
-        }
+        statusField.shouldHave(Condition.exactText(Constants.USER_STATUS_ENABLED));
 
-        boolean isEmployeeNameValid = Arrays.stream(getCurrentUserName().split(" ")).allMatch(employeeName::contains);
-
-        return userRole.equals(Constants.USER_ROLE_ADMIN)
-                && isEmployeeNameValid
-                && status.equals(Constants.USER_STATUS_ENABLED)
-                && username.equals(uniqueUsername);
-    }
-
-    public AdminPage cancelUserEdit() {
-        cancelButton.click();
-
-        spinner
-                .shouldNot(Condition.exist)
-                .shouldNotBe(Condition.visible);
-
-        this.siteHeader.getPageName()
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldNotHave(Condition.ownText("Admin"));
-
-        return page(AdminPage.class);
+        usernameField.shouldHave(Condition.exactValue(uniqueUsername));
     }
 }

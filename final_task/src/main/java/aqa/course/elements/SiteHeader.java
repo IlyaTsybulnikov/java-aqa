@@ -8,16 +8,16 @@ import static com.codeborne.selenide.Selenide.page;
 
 public class SiteHeader {
 
-    private final SelenideElement userDropdown = $x("//span[@class='oxd-userdropdown-tab']");
+    private final SelenideElement userDetailsDropdown = $x("//span[@class='oxd-userdropdown-tab']");
     private final SelenideElement currentPageHeader = $x("(//span//h6)[last()]");
     private final SelenideElement logoutButton = $x("//a[text()='Logout']");
 
     public String getCurrentUserName() {
-        return userDropdown.getText();
+        return userDetailsDropdown.getText();
     }
 
     public LoginPage clickLogout() {
-        this.userDropdown.click();
+        userDetailsDropdown.click();
         logoutButton.click();
 
         return page(LoginPage.class);

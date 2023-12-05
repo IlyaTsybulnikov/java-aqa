@@ -4,6 +4,7 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -21,11 +22,13 @@ public class MyLeavePage {
     private final ElementsCollection leaveStatusFilterRemoveButtons = $$x("//i" +
             "[@class='oxd-icon bi-x --clear']");
 
+    @Step("Remove Leave status filter")
     public MyLeavePage removeLeaveStatusFilter() {
-        int numberOfFilters = leaveStatusFilterRemoveButtons
+        /*int numberOfFilters = leaveStatusFilterRemoveButtons
                 .shouldHave(CollectionCondition.sizeGreaterThan(0))
                 .size();
 
+        System.out.println(numberOfFilters);
         for (int i = numberOfFilters - 1; i >= 0; i--) {
             leaveStatusFilterRemoveButtons
                     .get(i)
@@ -33,62 +36,49 @@ public class MyLeavePage {
                     .shouldBe(Condition.visible)
                     .shouldBe(Condition.interactable)
                     .click();
-        }
+        }*/
 
+        leaveStatusFilterRemoveButtons
+                .shouldHave(CollectionCondition.sizeGreaterThan(0))
+                .asDynamicIterable().forEach(button -> {
+                    System.out.println(button);
+                    System.out.println(leaveStatusFilterRemoveButtons.indexOf(button));
+                    System.out.println(button.$x("./parent::span").getText());
+                    button.click();
+                });
+        // .asDynamicIterable().forEach(button -> button.shouldBe(Condition.enabled))
+
+        System.out.println( $$x("//i[@class='oxd-icon bi-x --clear']").size() );
         return this;
     }
 
+    @Step("Filter My leaves")
     public MyLeavePage filterMyLeaves(String fromDate, String toDate, String status) {
-        fromDateInput
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.interactable)
-                .sendKeys(Keys.CONTROL + "A");
-        fromDateInput.sendKeys(Keys.BACK_SPACE);
+        fromDateInput.shouldBe(Condition.interactable).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
+        fromDateInput.setValue(fromDate);
 
-        fromDateInput
-                .shouldHave(Condition.exactText(""))
-                .setValue(fromDate);
+        toDateInput.shouldBe(Condition.interactable).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
+        toDateInput.setValue(toDate);
 
-        toDateInput
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.interactable)
-                .sendKeys(Keys.CONTROL + "A");
-        toDateInput.sendKeys(Keys.BACK_SPACE);
-
-        toDateInput
-                .shouldHave(Condition.exactText(""))
-                .setValue(toDate);
-
-        leaveStatusField
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.interactable)
-                .click();
+        leaveStatusField.shouldBe(Condition.enabled).click();
         leaveStatusOptions.$x(".//span[text()='" + status + "']").click();
 
-        searchButton
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.interactable)
-                .click();
+        searchButton.shouldBe(Condition.enabled).click();
 
         return this;
     }
 
+    @Step("Check if leave is created")
     public MyLeavePage checkIfLeaveCreated() {
         $$x("//div[@class='oxd-table-card']")
                 .shouldHave(CollectionCondition.size(1));
 
-        leaveDetailsButton
-                .should(Condition.exist)
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.interactable);
+        leaveDetailsButton.shouldBe(Condition.enabled);
 
         return this;
     }
 
+    @Step("Open leave details")
     public LeaveDetailsPage openLeaveDetails() {
         leaveDetailsButton.click();
         viewLeaveDetailsOption.click();
