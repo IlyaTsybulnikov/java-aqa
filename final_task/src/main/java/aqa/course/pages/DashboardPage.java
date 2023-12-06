@@ -1,47 +1,30 @@
 package aqa.course.pages;
 
+import aqa.course.constants.Constants;
 import aqa.course.elements.SiteHeader;
-import aqa.course.elements.SiteNavigationSidePanel;
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.collections.ExactTexts;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.page;
 
 public class DashboardPage {
 
     private final ElementsCollection dashboardElementsTitles = $$x("//div" +
             "[@class='orangehrm-dashboard-widget-name']//p");
 
-    private final SiteNavigationSidePanel siteNavigationSidePanel = new SiteNavigationSidePanel();
-    private final SiteHeader siteHeader = new SiteHeader();
-
-    @Step("Go to admin page")
-    public AdminPage goToAdminPage() {
-        return siteNavigationSidePanel.clickOpenAdminPage();
-    }
-
-    @Step("Go to recruitment page")
-    public RecruitmentPage goToRecruitmentPage() {
-        return siteNavigationSidePanel.clickGoToRecruitmentPage();
-    }
-
-    @Step("Go to leave page")
-    public LeavePage goToLeavePage() {
-        return siteNavigationSidePanel.clickGoToLeavePage();
-    }
-
-    @Step("Go to PIM page")
-    public PIMPage goToPIMPage() {
-        return siteNavigationSidePanel.clickGoToPIMPage();
-    }
-
     @Step("Get Dashboard page elements")
-    public ElementsCollection getGridElementsTitles() {
-        return dashboardElementsTitles;
+    public void getGridElementsTitles() {
+        dashboardElementsTitles.shouldHave(
+                CollectionCondition.size(7),
+                ExactTexts.exactTexts(Constants.TEST_DASHBOARD_ELEMENT_NAMES)
+        );
     }
 
     @Step("Logout")
     public LoginPage logout() {
-        return siteHeader.clickLogout();
+        return page(SiteHeader.class).clickLogout();
     }
 }

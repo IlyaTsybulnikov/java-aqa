@@ -27,21 +27,21 @@ public class SiteNavigationSidePanel {
     }
 
     @Step("Click go to recruitment tab")
-    public RecruitmentPage clickGoToRecruitmentPage() {
+    public RecruitmentPage clickOpenRecruitmentPage() {
         recruitmentButton.click();
 
         return page(RecruitmentPage.class);
     }
 
     @Step("Click go to leave tab")
-    public LeavePage clickGoToLeavePage() {
+    public LeavePage clickOpenLeavePage() {
         leaveButton.click();
 
         return page(LeavePage.class);
     }
 
     @Step("Click go to pim tab")
-    public PIMPage clickGoToPIMPage() {
+    public PIMPage clickOpenPIMPage() {
         pimButton.click();
 
         return page(PIMPage.class);

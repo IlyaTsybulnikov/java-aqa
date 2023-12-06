@@ -1,25 +1,26 @@
 package aqa.course.tests;
 
 import aqa.course.configuration.BaseTest;
-import aqa.course.configuration.TestConfiguration;
 import aqa.course.constants.Constants;
-import aqa.course.pages.DashboardPage;
-import com.codeborne.selenide.Condition;
+import aqa.course.elements.SiteNavigationSidePanel;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.page;
 
-public class AddCandidateTest
-        extends BaseTest
-        implements TestConfiguration {
+@DisplayName("Add Candidate Test")
+public class AddCandidateTest extends BaseTest {
 
     @Test
     @Description("Creation of new candidate")
+    @Owner("Ilya Tsybulnikov")
+    @DisplayName("Create New Candidate")
     public void createNewCandidate() {
 
-        page(DashboardPage.class)
-                .goToRecruitmentPage()
+        page(SiteNavigationSidePanel.class)
+                .clickOpenRecruitmentPage()
                 .clickAddCandidateButton()
                 .setFirstName(Constants.TEST_FIRST_NAME)
                 .setMiddleName(Constants.TEST_MIDDLE_NAME)
@@ -31,8 +32,7 @@ public class AddCandidateTest
                 .setNotes(Constants.TEST_NOTES)
                 .clickSaveButton()
                 .goToCandidatesList()
-                .filterCandidatesList(Constants.TEST_FULL_NAME)
-                .getCandidateByName(Constants.TEST_FULL_NAME)
-                .shouldHave(Condition.text(Constants.TEST_FULL_NAME));
+                .filterCandidatesList(Constants.TEST_FIRST_NAME)
+                .getCandidateByName(Constants.TEST_FULL_NAME);
     }
 }

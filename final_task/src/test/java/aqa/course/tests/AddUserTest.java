@@ -1,26 +1,28 @@
 package aqa.course.tests;
 
 import aqa.course.configuration.BaseTest;
-import aqa.course.configuration.TestConfiguration;
 import aqa.course.constants.Constants;
-import aqa.course.pages.CreateUserPage;
-import aqa.course.pages.DashboardPage;
+import aqa.course.elements.SiteNavigationSidePanel;
+import aqa.course.pages.AdminPage;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.page;
 
-public class AddUserTest
-        extends BaseTest
-        implements TestConfiguration {
+@DisplayName("Add User Test")
+public class AddUserTest extends BaseTest {
 
     @Test
     @Description("Create user and validate his fields")
+    @Owner("Ilya Tsybulnikov")
+    @DisplayName("Create User")
     public void createUserTest() {
         String uniqueUsername = Constants.TEST_USERNAME + System.currentTimeMillis();
 
-        String newEmployeeName = page(DashboardPage.class)
-                .goToAdminPage()
+        String newEmployeeName = page(SiteNavigationSidePanel.class)
+                .clickOpenAdminPage()
                 .clickAddButton()
                 .enterUserRole(Constants.USER_ROLE_ADMIN)
                 .enterStatus(Constants.USER_STATUS_ENABLED)
@@ -29,7 +31,7 @@ public class AddUserTest
                 .confirmPassword(Constants.TEST_PASSWORD)
                 .enterEmployeeNameAsCurrentUsername();
 
-        page(CreateUserPage.class)
+        page(AdminPage.class)
                 .clickSaveUser()
                 .filterUserList(uniqueUsername)
                 .openEditNewUserPage(uniqueUsername)

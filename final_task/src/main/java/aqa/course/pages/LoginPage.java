@@ -16,7 +16,6 @@ public class LoginPage {
     private final SelenideElement passwordField = $x("//input[@name='password']");
     private final SelenideElement loginButton = $x("//button[@type='submit']");
     private final SelenideElement pageTitle = $x("//h5");
-    private final SiteHeader siteHeader = new SiteHeader();
 
     @Step("Open login page")
     public LoginPage openLoginPage() {
@@ -49,8 +48,8 @@ public class LoginPage {
     }
 
     @Step("Logout")
-    public LoginPage logout() {
-        return siteHeader.clickLogout();
+    public void logout() {
+        page(SiteHeader.class).clickLogout();
     }
 
     @Step("Verify that login page title is visible")
