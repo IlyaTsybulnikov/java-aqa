@@ -56,7 +56,7 @@ public class AdminPage {
         return this;
     }
 
-    @Step("CLick edit button on {0} user table row")
+    @Step("Click edit button on {0} user table row")
     public AdminPage openEditNewUserPage(String username) {
         $x("//div[div/div[text()='" + username + "']]" +
                 "//button[i[@class='oxd-icon bi-pencil-fill']]").click();

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
-    public static final String LOGIN_PAGE_URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
+    public static final String LOGIN_PAGE_URL = "https://opensource-demo.orangehrmlive.com";
     public static final String LOGIN_USERNAME = "Admin";
     public static final String LOGIN_PASSWORD = "admin123";
     public static final String BROWSER_CHROME = "chrome";

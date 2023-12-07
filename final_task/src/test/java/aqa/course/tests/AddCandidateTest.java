@@ -18,7 +18,6 @@ public class AddCandidateTest extends BaseTest {
     @Owner("Ilya Tsybulnikov")
     @DisplayName("Create New Candidate")
     public void createNewCandidate() {
-
         page(SiteNavigationSidePanel.class)
                 .clickOpenRecruitmentPage()
                 .clickAddCandidateButton()

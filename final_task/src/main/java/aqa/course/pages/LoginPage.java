@@ -1,11 +1,9 @@
 package aqa.course.pages;
 
 import aqa.course.constants.Constants;
-import aqa.course.elements.SiteHeader;
 import aqa.course.elements.SiteNavigationSidePanel;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -20,8 +18,6 @@ public class LoginPage {
     @Step("Open login page")
     public LoginPage openLoginPage() {
         open(Constants.LOGIN_PAGE_URL);
-
-        if (!WebDriverRunner.getWebDriver().getCurrentUrl().contains("login")) logout();
 
         return this;
     }
@@ -45,11 +41,6 @@ public class LoginPage {
         loginButton.shouldBe(Condition.enabled).click();
 
         return page(SiteNavigationSidePanel.class);
-    }
-
-    @Step("Logout")
-    public void logout() {
-        page(SiteHeader.class).clickLogout();
     }
 
     @Step("Verify that login page title is visible")

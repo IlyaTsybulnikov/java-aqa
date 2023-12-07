@@ -25,13 +25,11 @@ public class LeavePage {
     private final SelenideElement toDateInput = $x("(//input)[4]");
     private final SelenideElement assignButton = $x("//button[@type='submit'][text()=' Assign ']");
     private final SelenideElement okModalButton = $x("//button[@type='button'][text()=' Ok ']");
-
     private final SelenideElement spinner = $x("//div[@class='oxd-loading-spinner-container']");
 
     // Leave Details fields
     private final SelenideElement employeeName = $x("(//p)[2]");
     private final SelenideElement leaveDates = $x("(//p)[3]");
-
 
     // 'My Leave' page elements
     private final SelenideElement fromDateFilterInput = $x("(//input)[2]");
@@ -77,15 +75,15 @@ public class LeavePage {
 
     @Step("Set leave's fromDate to {0}")
     public LeavePage setFromDate(String fromDate) {
-        fromDateInput.shouldBe(Condition.editable).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
-        fromDateInput.setValue(fromDate);
+        fromDateInput.shouldBe(Condition.editable).setValue(fromDate);
 
         return this;
     }
 
     @Step("Set leave's toDate to {0}")
     public LeavePage setToDate(String toDate) {
-        toDateInput.shouldBe(Condition.editable).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
+        toDateInput.shouldBe(Condition.enabled).click();
+        toDateInput.shouldNotHave(Condition.exactValue("")).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
         toDateInput.setValue(toDate);
 
         return this;
@@ -116,23 +114,24 @@ public class LeavePage {
 
     @Step("Remove Leave status filter")
     public LeavePage removeLeaveStatusFilter() {
-        int numberOfFilters = leaveStatusFilterRemoveButtons
+        leaveStatusFilterRemoveButtons
                 .shouldHave(CollectionCondition.sizeGreaterThan(0))
-                .size();
-
-        for (int i = numberOfFilters - 1; i >= 0; i--) {
-            leaveStatusFilterRemoveButtons.get(i).shouldBe(Condition.enabled).click();
-        }
+                .asFixedIterable()
+                .forEach(e -> leaveStatusFilterRemoveButtons.get(0).click());
 
         return this;
     }
 
     @Step("Filter My leaves")
     public LeavePage filterMyLeaves(String fromDate, String toDate, String status) {
-        fromDateFilterInput.shouldBe(Condition.interactable).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
+        fromDateFilterInput
+                .shouldNotHave(Condition.exactValue(""))
+                .sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
         fromDateFilterInput.setValue(fromDate);
 
-        toDateFilterInput.shouldBe(Condition.interactable).sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
+        toDateFilterInput
+                .shouldNotHave(Condition.exactValue(""))
+                .sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
         toDateFilterInput.setValue(toDate);
 
         leaveStatusField.shouldBe(Condition.enabled).click();

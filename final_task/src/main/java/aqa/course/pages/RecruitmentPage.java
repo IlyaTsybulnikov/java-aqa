@@ -1,7 +1,6 @@
 package aqa.course.pages;
 
 import aqa.course.constants.Constants;
-import aqa.course.elements.SiteNavigationSidePanel;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -28,8 +27,7 @@ public class RecruitmentPage {
     private final SelenideElement candidateNameFilter = $x("(//input)[2]");
     private final SelenideElement candidateNameOptions = $x("//div[@role='listbox']");
     private final SelenideElement searchCandidateButton = $x("//button[text()=' Search ']");
-
-    private final SiteNavigationSidePanel navigationSidePanel = new SiteNavigationSidePanel();
+    private final SelenideElement candidatesTopBarButton = $x("//a[text()='Candidates']");
 
     @Step("Click add candidate button")
     public RecruitmentPage clickAddCandidateButton() {
@@ -121,7 +119,7 @@ public class RecruitmentPage {
 
     @Step("Go to candidates list")
     public RecruitmentPage goToCandidatesList() {
-        navigationSidePanel.clickOpenRecruitmentPage();
+        candidatesTopBarButton.click();
 
         return this;
     }
