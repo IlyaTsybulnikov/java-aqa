@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Selenide.page;
 public class BaseTest {
 
     @BeforeAll
-    static void baseTestConfig(TestInfo info) {
+    public static void baseTestConfig(TestInfo info) {
         Configuration.browser = Constants.BROWSER_CHROME;
         Configuration.browserSize = Constants.BROWSER_SIZE_FULL_HD;
         Configuration.timeout = 5000;
@@ -35,7 +35,7 @@ public class BaseTest {
 
     @AfterAll
     @DisplayName("Complete a test and close driver")
-    static void afterAllTests() {
+    public static void afterAllTests() {
         Selenide.closeWebDriver();
     }
 }
