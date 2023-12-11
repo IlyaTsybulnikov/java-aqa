@@ -1,6 +1,8 @@
 package aqa.course.pages;
 
+import aqa.course.constants.Constants;
 import aqa.course.elements.SiteHeader;
+import aqa.course.elements.SiteNavigationSidePanel;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
@@ -107,8 +109,11 @@ public class LeavePage {
 
     @Step("Validate leave details")
     public void validateLeave(String fromDate, String toDate, String name) {
-        employeeName.shouldHave(Condition.exactText(name));
+        if(!leaveDates.getText().startsWith(fromDate)) {
+            checkDateFormat();
+        }
 
+        employeeName.shouldHave(Condition.exactText(name));
         leaveDates.shouldHave(Condition.partialText(fromDate), Condition.partialText(toDate));
     }
 
@@ -157,5 +162,25 @@ public class LeavePage {
         viewLeaveDetailsOption.click();
 
         return this;
+    }
+
+    @Step("Check if Date Format is default")
+    private void checkDateFormat() {
+        page(SiteNavigationSidePanel.class)
+                .clickOpenAdminPage()
+                .goToLocalization()
+                .setDefaultDateFormat();
+
+        page(SiteNavigationSidePanel.class)
+                .clickOpenLeavePage()
+                .clickMyLeaveButton()
+                .removeLeaveStatusFilter()
+                .filterMyLeaves(
+                        Constants.TEST_LEAVE_FROM_DATE,
+                        Constants.TEST_LEAVE_TO_DATE,
+                        Constants.TEST_LEAVE_SCHEDULED_TYPE
+                )
+                .checkIfLeaveCreated()
+                .openLeaveDetails();
     }
 }

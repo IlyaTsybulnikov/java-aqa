@@ -130,7 +130,6 @@
             <reportVersion>2.24.0</reportVersion>
           </configuration>
         </plugin>
-
       </plugins>
     </pluginManagement>
   </build>

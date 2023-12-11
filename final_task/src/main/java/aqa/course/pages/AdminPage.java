@@ -15,6 +15,7 @@ public class AdminPage {
     private final SelenideElement addButton = $x("//button[text()=' Add ']");
     private final SelenideElement topbarMenu = $x("//nav[@class='oxd-topbar-body-nav']");
     private final SelenideElement jobTitlesOption = $x("//li[a[text()='Job Titles']]");
+    private final SelenideElement localizationOption = $x("//a[text()='Localization']");
     private final SelenideElement usernameFilter = $x("(//input" +
             "[@class='oxd-input oxd-input--active'])[2]");
     private final SelenideElement searchButton = $x("//button[@type='submit'][text()=' Search ']");
@@ -37,6 +38,11 @@ public class AdminPage {
     private final SelenideElement noteTextArea = $x("(//textarea)[2]");
     private final SelenideElement addJobTitleButton = $x("//button[@type='button'][text()=' Add ']");
     private final SelenideElement confirmDeleteButton = $x("//button[text()=' Yes, Delete ']");
+
+    //'Localization' page elements
+    private final SelenideElement dateFormatField = $x("(//div[@class='oxd-select-text-input'])[2]");
+    private final SelenideElement dateFormatOption = $x("//div[@role='listbox']//span");
+    private final SelenideElement saveLocalizationButton = $x("//button[@type='submit']");
 
     @Step("Click add user")
     public AdminPage clickAddButton() {
@@ -178,5 +184,27 @@ public class AdminPage {
         confirmDeleteButton.click();
 
         return this;
+    }
+
+    @Step("Go to localization settings")
+    public AdminPage goToLocalization() {
+        topbarMenu.$x(".//span[text()='Configuration ']").click();
+        localizationOption.click();
+
+        return this;
+    }
+
+    @Step("Set default date format")
+    public void setDefaultDateFormat() {
+        if(!dateFormatField
+                .shouldNotHave(Condition.exactText("-- Select --"))
+                .getText()
+                .startsWith(Constants.DEFAULT_DATE_FORMAT)
+        ) {
+            dateFormatField.click();
+            dateFormatOption.click();
+
+            saveLocalizationButton.click();
+        }
     }
 }
