@@ -29,6 +29,7 @@ public class AppTest {
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         driver = new ChromeDriver(options);
+        options.headless = true;
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://tweek.so/ru");
