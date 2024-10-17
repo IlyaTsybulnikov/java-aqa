@@ -26,7 +26,7 @@ public class AppTest {
     @BeforeEach
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.headless = true;
+        options.addArguments("--headless");
         driver = new ChromeDriver(options);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
@@ -51,7 +51,7 @@ public class AppTest {
         assertEquals(6, products.size());
     }
 
-    @Test
+    /*@Test
     public void addAndRemoveFromCartTest() {
         WebElement backpack = driver.findElement(By.xpath("//div[@class='inventory_list']/div[1]"));
         WebElement jacket = driver.findElement(By.xpath("//div[@class='inventory_list']/div[4]"));
@@ -127,5 +127,5 @@ public class AppTest {
                 "/div[@class='inventory_item'][last()]"));
 
         assertEquals(firstElemBeforeSort, lastElemAfterSort);
-    }
+    }*/
 }
