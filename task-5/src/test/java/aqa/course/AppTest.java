@@ -26,6 +26,7 @@ public class AppTest {
     @BeforeEach
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
+        options.headless = true;
         driver = new ChromeDriver(options);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
